@@ -1,0 +1,10 @@
+diff a/Tlink/src/main/java/com/tlink/project/myPage/controller/MyPageController.java b/Tlink/src/main/java/com/tlink/project/myPage/controller/MyPageController.java	(rejected hunks)
+@@ -38,8 +38,6 @@
+ 	@Autowired
+ 	private MyPageService service;
+ 	
+-    @Autowired
+-    private ServletContext servletContext;
+ 	
+ 	// 프로젝트 목록 페이지
+ 	@GetMapping("/project")

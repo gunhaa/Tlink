@@ -1,0 +1,114 @@
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 100;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.otf) format('opentype');}
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 300;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.otf) format('opentype');}
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 400;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.otf) format('opentype');}
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 500;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.otf) format('opentype');}
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 700;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.otf) format('opentype');}
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 900;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.otf) format('opentype');}
+
+* {
+    font-family: 'Noto Sans KR', sans-serif;
+} 
+
+
+*{
+    margin: 0;
+    box-sizing: border-box;
+    /* border: 1px solid black;  */
+}
+
+.container{
+    display: flex;
+    margin: 0;
+}
+
+.sidebar{
+    width: 350px;
+    background-color:#643BAB;
+}
+
+.side-menu{
+    position: fixed;
+    width: 350px;
+    background-color: #643BAB;
+}
+
+
+.top{
+    display: flex;
+    height: 200px;
+    justify-content: center;
+    align-items: flex-end;
+    margin-bottom: 50px;
+}
+
+.profile-img{
+    width: 100px;
+    height: 100px;
+    border: 3px solid white;
+    border-radius: 50%;
+    position: relative;
+}
+
+.profile-img img{
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#delete-image{
+    color: #b498e7;
+    position: absolute;
+    cursor: pointer;
+    transition-duration: 0.3s;
+}
+
+#delete-image:hover{
+    color: white;
+}
+
+/* 메뉴 */
+.mid{
+    margin-left: 30px;
+    margin-bottom: 150px;
+    height: 500px;
+}
+
+.menu{
+    margin-bottom: 50px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition-duration: 0.1s;
+}
+
+.menu:hover{
+	transform: scale(1.03);
+}
+
+/* 로그아웃 */
+.bot{
+    display: flex;
+    justify-content: right;
+    padding: 10px;
+    margin-bottom: 100px;
+}
+
+.bot > .logout{
+    color: #b498e7;
+    font-weight: bold;
+    font-size: 12px;
+    cursor: pointer;
+    transition-duration: 0.3s;
+}
+
+.bot > .logout:hover{
+    color: white;
+}
+
+/* 우측 */
+.content-area{
+    width: 100%;
+}
+

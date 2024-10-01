@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="calendarDataMapper">
+
+	<!-- CalendarData DTO에 개한 resultMap -->
+	<resultMap type="CalendarData" id="calendar_rm">
+
+		<id property="userNo" column="USER_NO" />
+
+		<result property="userName" column="USER_NAME" />
+		<result property="scheduleNo" column="SCHEDULE_NO" />
+		<result property="scheduleType" column="SCHEDULE_TYPE" />
+		<result property="scheduleTitle" column="SCHEDULE_TITLE" />
+		<result property="startDate" column="START_DATE" />
+		<result property="endDate" column="END_DATE" />
+		<result property="scheduleContent" column="SCHEDULE_CONTENT" />
+		<result property="fileCode" column="FILE_CODE" />
+		<result property="projectNo" column="PROJECT_NO" />
+		
+		<collection property="fileList" 
+			select="selectFileList"
+			column="SCHEDULE_NO"
+			javaType="java.util.ArrayList"
+			ofType="NoticeFiles">
+     	</collection>
+
+	</resultMap>
+	
+	<resultMap type="NoticeFiles" id="noticeFile_rm"> 
+		<id property="fileNo" column="FILE_NO"/> 
+		
+		<result property="filePath" column="FILE_PATH"/> 
+		<result property="fileReName" column="FILE_RENAME"/> 
+		<result property="fileOriginal" column="FILE_ORIGINAL"/> 
+		<result property="fileOrder" column="FILE_ORDER"/> 
+		<result property="fileCode" column="FILE_CODE"/> 
+		<result property="targetNo" column="TARGET_NO"/> 
+	</resultMap>
+	
+	<!-- 모든 일정 조회하기 -->
+	<select id="selectAll" resultMap="calendar_rm">
+		SELECT  SCHEDULE_NO, SCHEDULE_TYPE, SCHEDULE_TITLE, START_DATE,
+		        END_DATE, SCHEDULE_CONTENT, 
+		        USER_NO, USER_NAME
+		FROM "SCHEDULE" 
+		JOIN "USER" USING(USER_NO)
+		WHERE PROJECT_NO = #{projectNo}
+	</select>
+	
+	
+	<!-- 일정 추가하기 -->
+	<insert id="insertEvent" parameterType="CalendarData" useGeneratedKeys="true">
+   
+   	<selectKey order="BEFORE" resultType="_int" keyProperty="scheduleNo">
+   		SELECT SEQ_SCHEDULE_NO.NEXTVAL FROM DUAL
+   	</selectKey>
+
+		INSERT INTO SCHEDULE VALUES( 	
+			#{scheduleNo},
+		    #{scheduleType},
+		    #{scheduleTitle},
+		    TO_DATE(#{startDate}, 'YYYY-MM-DD"T"HH24:MI'),
+		    TO_DATE(#{endDate}, 'YYYY-MM-DD"T"HH24:MI'),
+		    #{scheduleContent},
+			#{userNo},
+			#{projectNo}
+	   )
+   </insert>
+	
+	<!-- 일정 수정하기 -->
+	<insert id="updateEvent">
+		UPDATE SCHEDULE SET 
+		    SCHEDULE_TYPE = #{scheduleType}, 
+		    SCHEDULE_TITLE = #{scheduleTitle}, 
+		    START_DATE = TO_DATE(#{startDate}, 'YYYY-MM-DD"T"HH24:MI'),
+		    END_DATE =TO_DATE(#{endDate}, 'YYYY-MM-DD"T"HH24:MI'),
+		    SCHEDULE_CONTENT = #{scheduleContent}
+		WHERE SCHEDULE_NO = #{scheduleNo}
+	</insert>
+	
+	<!-- 일정 삭제하기 -->
+	<delete id="deleteEvent" parameterType="map">
+		DELETE FROM SCHEDULE 
+		WHERE SCHEDULE_NO = #{scheduleNo}
+		AND USER_NO = #{userNo}
+	</delete>
+	
+	<!-- 일정 파일 조회 -->
+   <select id="selectFileList" resultMap="noticeFile_rm">
+		SELECT *
+		FROM FILES
+		WHERE FILE_CODE = 4
+		AND TARGET_NO = #{scheduleNo}
+   </select>
+	
+	
+	<!-- 휴가 파일 등록하기  -->
+	<insert id="insertScheduleFile">
+		INSERT INTO FILES VALUES(
+        SEQ_FILE_NO.NEXTVAL,
+        #{filePath},
+        #{fileReName},
+        #{fileOriginal},
+        0,
+        4,
+        #{targetNo}
+		)
+	</insert>
+	
+	<!-- 휴가 파일 수정하기 -->
+	<select id="updateScheduleFile">
+		UPDATE FILES SET
+		    FILE_PATH = #{filePath},
+		    FILE_RENAME = #{fileReName},
+		    FILE_ORIGINAL = #{fileOriginal}
+		WHERE TARGET_NO = #{targetNo}
+	</select>
+	
+	<!-- 휴가 파일 삭제하기 -->
+	<delete id="deleteHolidayFile">
+		DELETE FROM FILES
+		   WHERE TARGET_NO = #{scheduleNo}
+		   AND FILE_CODE = 4
+	</delete>
+	
+	
+	<!-- 비동기로 일정 수정하기 -->
+	<insert id="updateEventDrop">
+		UPDATE SCHEDULE SET 
+		    SCHEDULE_TYPE = #{scheduleType}, 
+		    SCHEDULE_TITLE = #{scheduleTitle}, 
+		    START_DATE = TO_DATE(#{startDate}, 'YYYY-MM-DD HH24:MI:SS'),
+		    END_DATE =TO_DATE(#{endDate}, 'YYYY-MM-DD HH24:MI:SS'),
+		    SCHEDULE_CONTENT = #{scheduleContent}
+		WHERE SCHEDULE_NO = #{scheduleNo}
+	</insert>
+	
+</mapper>

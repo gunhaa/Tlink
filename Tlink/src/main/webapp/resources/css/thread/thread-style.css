@@ -1,0 +1,151 @@
+.viewHeader{
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+}
+
+.viewHeader > span{
+    font-size: 20px;
+    font-weight: bold;
+
+    margin: 10px 10px;
+}
+
+.viewHeader > div{
+    display: flex;
+    align-items: center;
+    margin: 10px 10px;
+}
+
+.viewMain{
+
+}
+
+
+.threadInput{
+    height: 140px;
+    cursor: pointer;
+    background-color: rgb(210, 210, 210);
+
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0px 20px;
+}
+
+.inputBtnArea{
+    width: 96%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+}
+
+#inputBox{
+    width: 96%;
+    height: 80px;
+    cursor: pointer;
+    background-color: white;
+}
+
+.fileBox{
+    width: 150px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid black;
+    background-color: white;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    margin: 5px 5px;
+}
+
+.fileListBox{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/* System chatItem */
+.chatSystem{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 10px 20px;
+}
+
+.chatSystem2{
+    display: inline-block;
+    min-width: 0;
+    border-radius: 30px;
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.chatSystem2 > :nth-child(1){
+    color:gray;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.chatSystem2 > :nth-child(2){
+    color:rgb(210, 210, 210);
+    font-size: 12px;
+}
+
+/* Normal ChatItem  */
+.chatNormal{
+    display: flex;
+}
+
+.infoLine{
+    display: flex;
+    align-items: center;
+}
+
+.infoLine > :nth-child(1){
+    font-size: 16px;
+    font-weight: bold;
+
+    color:gray;
+
+    margin-right: 10px;
+}
+
+.infoLine > :nth-child(2){
+    color:rgb(210, 210, 210);
+    font-size: 12px;
+}
+
+.profile{
+    border:1px solid black;
+    border-radius: 100%;
+
+    width: 41px;
+    height: 41px;
+
+    margin-right: 10px;
+
+    object-fit: cover;
+
+}
+
+.profile > img{
+    height: 40px;
+}
+
+
+.btn {
+    cursor: pointer;
+    background-color: #8839AE;
+    color: white;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    /* 진한 회색 그림자 */
+}

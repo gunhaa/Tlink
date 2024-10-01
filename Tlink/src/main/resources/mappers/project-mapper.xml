@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="projectMapper">
+
+	<resultMap type="Project" id="project_rm">
+
+		<!-- DB의 기본 키(복합키면 여러 개 작성) -->
+		<id property="projectNo" column="PROJECT_NO" />
+
+		<!-- DB의 일반 컬럼들 -->
+		<result property="projectTitle" column="PROJECT_TITLE" />
+		<result property="projectInfo" column="PROJECT_INFO" />
+		<result property="createDate" column="CREATE_DATE" />
+		<result property="manager" column="MANAGER" />
+		<result property="userCount" column="USER_COUNT" />
+	</resultMap>
+
+	<resultMap type="User" id="user_rm">
+
+		<!-- DB의 기본 키(복합키면 여러 개 작성) -->
+		<id property="userNo" column="USER_NO" />
+
+		<!-- DB의 일반 컬럼들 -->
+		<result property="userEmail" column="USER_EMAIL" />
+		<result property="userPw" column="USER_PW" />
+		<result property="userName" column="USER_NAME" />
+		<result property="userPhone" column="USER_PHONE" />
+
+		<result property="userAddr" column="USER_ADDR" />
+
+		<result property="profileImg" column="PROFILE_IMG" />
+		<result property="enrollDate" column="ENROLL_DATE" />
+		<!-- <result property="userDeleteFlag" column="USER_DEL_FL" /> -->
+		<result property="role" column="ROLE" />
+	</resultMap>
+
+	<!-- 프로젝트 생성 -->
+	<insert id="create" parameterType="Project">
+		INSERT INTO "PROJECT" VALUES (
+		SEQ_PROJECT_NO.NEXTVAL,
+		#{projectTitle},
+		#{projectInfo},
+		DEFAULT,
+		#{manager}
+		)
+
+		<selectKey keyProperty="projectNo" resultType="int"
+			order="AFTER">
+			SELECT SEQ_PROJECT_NO.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+
+	<!-- 유저 프로젝트 생성 -->
+	<insert id="insertUser">
+		INSERT INTO "USER_PROJECT" VALUES(
+		#{userNo},
+		#{projectNo}
+		)
+	</insert>
+
+	<!-- 자동 완성 -->
+	<select id="autocomplete" resultMap="project_rm">
+	<![CDATA[
+		SELECT * FROM (
+		    SELECT ROWNUM AS NUM, PROJECT_TITLE, PROJECT_NO
+		    FROM (
+		        SELECT *
+		        FROM PROJECT
+		        JOIN USER_PROJECT USING(PROJECT_NO)
+		        WHERE PROJECT_TITLE LIKE '%${query}%'
+		        AND USER_NO = #{userNo}
+		        ORDER BY PROJECT_NO DESC
+		    )
+		    WHERE ROWNUM <= 10
+		)
+		WHERE NUM >= 1
+		]]>
+	</select>
+
+	<delete id="deleteProject">
+		DELETE FROM PROJECT
+		WHERE PROJECT_NO = #{projectNo}
+	</delete>
+
+	<select id="selectProject" resultMap="project_rm">
+		SELECT PROJECT_NO,
+		PROJECT_TITLE, "MANAGER" FROM "PROJECT"
+		WHERE PROJECT_NO = #{projectNo}
+	</select>
+	
+	<select id="selectMemberList" resultMap="user_rm">
+		SELECT USER_NO, USER_EMAIL, USER_NAME, PROFILE_IMG
+		FROM "USER"
+		JOIN USER_PROJECT USING(USER_NO)
+		WHERE PROJECT_NO = #{projectNo}
+		AND USER_DEL_FL = 'N'
+	</select>
+	
+	<delete id="deleteMember">
+		DELETE USER_PROJECT
+		WHERE USER_NO = #{userNo}
+		AND PROJECT_NO = #{projectNo}
+	</delete>
+	
+	<select id="selectUserNo" resultType="_int">
+		SELECT USER_NO FROM "USER"
+		WHERE USER_EMAIL = #{userEmail}
+	</select>
+	
+	<update id="changeManager">
+		UPDATE "PROJECT" SET
+		"MANAGER" = #{manager}
+		WHERE PROJECT_NO = #{projectNo}
+	</update>
+	
+	<!-- 화상 채팅방 생성(프로젝트 생성 시) -->
+	<insert id="insertVideoRoom">
+		INSERT INTO "VIDEO_ROOM" VALUES(
+		#{projectNo},
+		'화상 채팅'
+		)
+	</insert>
+
+
+</mapper>

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="workRestMapper">
+	
+	
+    <resultMap type="Work" id="work_rm">
+      <id     property="workNo" column="WORK_NO"/>
+      <result property="workTitle" column="WORK_TITLE"/>
+      <result property="workContent" column="WORK_CONTENT"/>
+      <result property="createDate" column="CREATE_DT"/>
+      <result property="updateDate" column="UPDATE_DT"/>
+      <result property="dueDate" column="DUE_DT"/>
+      <result property="workState" column="WORK_PR_ST"/>
+      <result property="workPriority" column="WORK_PR"/>
+      <result property="workManager" column="WORK_MN_NO"/>
+      <result property="parentNo" column="PARENT_NO"/>
+      <result property="projectNo" column="PROJECT_NO"/>
+      
+      <result property="workManagerName" column="USER_NAME"/>
+      <result property="profileImage" column="PROFILE_IMG"/>
+      <result property="projectName" column="PROJECT_TITLE"/>
+      <result property="parentName" column="PARENT_TITLE"/>
+      <result property="level" column="LEVEL"/>
+      
+   </resultMap>
+	
+	
+    <resultMap type="CommentWork" id="comment_rm">
+      <id     property="commentNo" column="COMMENT_NO"/>
+      <result property="commentCon" column="COMMENT_CON"/>
+      <result property="commentDate" column="COMMENT_DT"/>
+      <result property="parentNo" column="PARENT_NO"/>
+      <result property="workNo" column="WORK_NO"/>
+      <result property="userNo" column="USER_NO"/>
+      
+      <result property="userName" column="USER_NAME"/>
+      <result property="parentName" column="PARENT_TITLE"/>
+   </resultMap>
+	
+	
+
+   
+	
+	<update id="update">
+		UPDATE WORK SET
+		WORK_TITLE= #{workTitle},
+		WORK_CONTENT=#{workContent},
+		UPDATE_DT=SYSDATE,
+		DUE_DT=#{dueDt},
+		WORK_PR_ST=#{workPrSt},
+		WORK_PR	  =#{workPr},
+		WORK_MN_NO=#{workMnNo},
+		PARENT_NO=#{parentNo},
+		PROJECT_NO=#{projectNo}
+		WHERE WORK_NO=#{workNo}
+	</update>
+	
+	<delete id="delete">
+		UPDATE WORK SET
+		WORK_ST=0
+		WHERE WORK_NO=#{workNo}
+	</delete>
+	
+	
+	
+	
+	<insert id="insertTable">
+		INSERT INTO WORK
+		VALUES(
+		SEQ_WORK_NO.NEXTVAL, DEFAULT, DEFAULT, 
+		DEFAULT, DEFAULT, DEFAULT,
+		DEFAULT, DEFAULT, DEFAULT,
+		#{userNo}, DEFAULT, #{projectNo}
+		)
+	</insert>
+	<select id="selectWorkNo" resultType="_int">
+		SELECT SEQ_WORK_NO.CURRVAL
+		FROM DUAL
+	</select>
+	
+
+
+
+	
+	<update id="updateWorkTitle">
+		UPDATE WORK SET
+		WORK_TITLE= #{workTitle}
+		WHERE WORK_NO=#{workNo}
+	</update>
+	<update id="updateDueDate">
+		UPDATE WORK SET
+		DUE_DT=#{dueDate}
+		WHERE WORK_NO=#{workNo}
+		AND PROJECT_NO=#{projectNo}
+	</update>
+	<update id="updateWorkState">
+		UPDATE WORK SET
+		WORK_PR_ST=#{workState}
+		WHERE WORK_NO=#{workNo}
+		AND PROJECT_NO=#{projectNo}
+	</update>
+	<update id="updateWorkPriority">
+		UPDATE WORK SET
+		WORK_PR	  =#{workPriority}
+		WHERE WORK_NO=#{workNo}
+		AND PROJECT_NO=#{projectNo}
+	</update>
+	<update id="updateWorkManager">
+		UPDATE WORK SET
+		WORK_MN_NO=#{workManager}
+		WHERE WORK_NO=#{workNo}
+		AND PROJECT_NO=#{projectNo}
+	</update>
+	<update id="updateParentNo">
+		UPDATE WORK SET
+		PARENT_NO=#{parentNo}
+		WHERE WORK_NO=#{workNo}
+		AND PROJECT_NO=#{projectNo}
+	</update>
+	
+	
+	
+	
+	
+	<insert id="insertMywork">
+		INSERT INTO WORK
+		VALUES(
+		SEQ_WORK_NO.NEXTVAL, DEFAULT, DEFAULT, 
+		DEFAULT, DEFAULT, DEFAULT,
+		DEFAULT, DEFAULT, DEFAULT,
+		#{workManager}, DEFAULT, #{projectNo}
+		)
+	</insert>
+	
+	
+	
+	
+	
+	<select id="selectManager" resultType="Integer">
+		SELECT WORK_MN_NO FROM WORK
+		GROUP BY WORK_MN_NO
+	</select>
+	<select id="selectManagerByWork" resultMap="work_rm">
+		SELECT A.WORK_NO, A.WORK_TITLE, A.WORK_CONTENT, 
+		TO_CHAR(A.CREATE_DT, 'YYYY-MM-DD') CREATE_DT, TO_CHAR(A.UPDATE_DT, 'YYYY-MM-DD') UPDATE_DT, TO_CHAR(A.DUE_DT, 'YYYY-MM-DD') DUE_DT, 
+		A.WORK_PR_ST, A.WORK_PR, A.WORK_MN_NO, A.PARENT_NO, A.PROJECT_NO
+		,USER_NAME, PROFILE_IMG
+		,PROJECT_TITLE
+		,B.WORK_TITLE PARENT_TITLE
+		FROM WORK A
+		LEFT OUTER JOIN "USER" ON A.WORK_MN_NO="USER".USER_NO
+		LEFT OUTER JOIN "PROJECT" ON A.PROJECT_NO="PROJECT".PROJECT_NO
+		LEFT OUTER JOIN WORK B ON A.PARENT_NO=B.WORK_NO
+		WHERE A.PROJECT_NO=1
+		AND A.WORK_MN_NO=#{managerNo}
+		AND A.WORK_ST=1
+		ORDER BY A.WORK_NO
+	</select>
+	
+	
+	
+	<select id="selectProject" resultType="Integer">
+		SELECT PROJECT_NO 
+		FROM USER_PROJECT
+		WHERE USER_NO=#{userNo}
+	</select>
+	<select id="selectProjectByWork" resultMap="work_rm">
+		SELECT A.WORK_NO, A.WORK_TITLE, A.WORK_CONTENT, 
+		TO_CHAR(A.CREATE_DT, 'YYYY-MM-DD') CREATE_DT, TO_CHAR(A.UPDATE_DT, 'YYYY-MM-DD') UPDATE_DT, TO_CHAR(A.DUE_DT, 'YYYY-MM-DD') DUE_DT, 
+		A.WORK_PR_ST, A.WORK_PR, A.WORK_MN_NO, A.PARENT_NO, A.PROJECT_NO
+		,USER_NAME, PROFILE_IMG
+		,PROJECT_TITLE
+		,B.WORK_TITLE PARENT_TITLE
+		FROM WORK A
+		LEFT OUTER JOIN "USER" ON A.WORK_MN_NO="USER".USER_NO
+		LEFT OUTER JOIN "PROJECT" ON A.PROJECT_NO="PROJECT".PROJECT_NO
+		LEFT OUTER JOIN WORK B ON A.PARENT_NO=B.WORK_NO
+		WHERE A.PROJECT_NO=#{projectNo}
+		AND A.WORK_ST=1
+		ORDER BY A.WORK_NO
+	</select>
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<insert id="insertStateBy">
+		INSERT INTO WORK
+		VALUES(
+		SEQ_WORK_NO.NEXTVAL, DEFAULT, DEFAULT, 
+		DEFAULT, DEFAULT, DEFAULT,
+		DEFAULT, #{workState}, DEFAULT,
+		DEFAULT, DEFAULT, #{projectNo}
+		)
+	</insert>
+	<select id="selectWork" resultMap="work_rm">
+		SELECT *
+		FROM WORK
+		WHERE WORK_NO=#{workNo}
+	</select>
+	
+	
+	
+	
+	
+	
+	<!-- 댓글 -->
+	<insert id="commentInsert">
+		INSERT INTO WORK_COMMENT VALUES(
+		    SEQ_WORK_COMMENT_NO.NEXTVAL, #{commentCon}, 
+		    DEFAULT, DEFAULT, DEFAULT,
+		    #{workNo}, #{userNo}
+		)
+	</insert>
+	
+	<update id="commentDelete">
+		UPDATE WORK_COMMENT SET
+		COMMENT_ST=0
+		WHERE COMMENT_NO=#{commentNo}
+	</update>
+	<update id="commentUpdate">
+		UPDATE WORK_COMMENT SET
+		COMMENT_CON=#{commentCon}
+		WHERE COMMENT_NO=#{commentNo}
+	</update>
+	
+	
+	
+	
+	
+	<select id="commentSelect" resultMap="comment_rm">
+		SELECT W.COMMENT_NO, W.COMMENT_CON, W.COMMENT_DT,
+		W.PARENT_NO, W.WORK_NO, W.USER_NO,
+		USER_NAME
+		FROM WORK_COMMENT W
+		LEFT OUTER JOIN "USER" ON W.USER_NO="USER".USER_NO
+		WHERE WORK_NO=#{workNo}
+		AND COMMENT_ST=1
+		ORDER BY COMMENT_NO
+	</select>
+	
+	
+	
+	
+	
+	
+	<select id="selectList" resultMap="work_rm">
+		SELECT 
+		    A.WORK_NO, A.WORK_TITLE, A.WORK_CONTENT, 
+		    TO_CHAR(A.CREATE_DT, 'YYYY-MM-DD') CREATE_DT, TO_CHAR(A.UPDATE_DT, 'YYYY-MM-DD') UPDATE_DT, TO_CHAR(A.DUE_DT, 'YYYY-MM-DD') DUE_DT, 
+		    A.WORK_PR_ST, A.WORK_PR, A.WORK_MN_NO, A.PARENT_NO, A.PROJECT_NO
+		    ,USER_NAME, PROFILE_IMG
+		    ,PROJECT_TITLE
+		    ,B.WORK_TITLE PARENT_TITLE
+		    ,LEVEL
+		FROM 
+			WORK A
+			LEFT OUTER JOIN "USER" ON A.WORK_MN_NO="USER".USER_NO
+			LEFT OUTER JOIN "PROJECT" ON A.PROJECT_NO="PROJECT".PROJECT_NO
+			LEFT OUTER JOIN WORK B ON A.PARENT_NO=B.WORK_NO
+			WHERE A.PROJECT_NO=#{projectNo}
+			AND A.WORK_ST=1
+		        
+		START WITH A.PARENT_NO IS NULL 
+		CONNECT BY PRIOR A.WORK_NO = A.PARENT_NO
+	</select>	
+	
+
+	
+	
+</mapper>

@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "outDir": "C:/finalproject/TLink/spring/Tlink/src/main/webapp/resources/js/videoConference",
+    "rootDir": "C:/finalproject/TLink/ts",
+    "strict": true,
+    "module": "commonjs",
+    "target": "es6",
+    "esModuleInterop": true,
+    "sourceMap": true
+  },
+  "include": ["**/*.ts"]  // 모든 TypeScript 파일을 포함
+}

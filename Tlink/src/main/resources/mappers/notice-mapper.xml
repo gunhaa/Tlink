@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="noticeMapper">
+
+
+	<resultMap type="Notice" id="notice_rm">
+
+		<id property="userNo" column="USER_NO" />
+
+		<result property="userName" column="USER_NAME" />
+		<result property="noticeNo" column="NOTICE_NO" />
+		<result property="noticeType" column="NOTICE_TYPE" />
+		<result property="noticeStatus" column="NOTICE_STATUS" />
+		<result property="noticeCommentView" column="NOTICE_COMMENT_VIEW" />
+		<result property="noticeCopy" column="NOTICE_COPY" />
+		<result property="noticeTitle" column="NOTICE_TITLE" />
+		<result property="createDate" column="CREATE_DT" />
+		<result property="updateDate" column="UPDATE_DT" />
+		<result property="noticeContent" column="NOTICE_CONTENT" />
+		<result property="readCount" column="READ_COUNT" />
+		<result property="commentCount" column="COMMENT_COUNT" />
+
+		<!-- collection 태그 : select로 조회된 결과를 컬렉션(List)에 담아 지정된 필드에 세팅 property 
+			: List를 담을 DTO의 필드명 select : 실행할 select의 id column : 조회 결과 중 지정된 컬럼의 값을 파라미터로 
+			전달 javaType : List(컬렉션)의 타입을 지정 ofType : List(컬렉션)의 제네릭(타입 제한) 지정 -->
+
+		<collection property="commentList"
+			select="selectCommentList" column="NOTICE_NO"
+			javaType="java.util.ArrayList" ofType="NoticeComment">
+		</collection>
+
+		<collection property="fileList" select="selectFileList"
+			column="NOTICE_NO" javaType="java.util.ArrayList"
+			ofType="NoticeFiles">
+		</collection>
+
+
+	</resultMap>
+
+	<!-- BoardImage DTO에 개한 resultMap -->
+	<resultMap type="NoticeFiles" id="noticeFile_rm">
+		<id property="fileNo" column="FILE_NO" />
+
+		<result property="filePath" column="FILE_PATH" />
+		<result property="fileReName" column="FILE_RENAME" />
+		<result property="fileOriginal" column="FILE_ORIGINAL" />
+		<result property="fileOrder" column="FILE_ORDER" />
+		<result property="fileCode" column="FILE_CODE" />
+		<result property="targetNo" column="TARGET_NO" />
+	</resultMap>
+
+	<resultMap type="NoticeComment" id="comment_rm">
+		<id property="commentNo" column="COMMENT_NO" />
+
+		<result property="commentContent" column="COMMENT_CONTENT" />
+		<result property="commentCreateDate" column="C_CREATE_DATE" />
+		<result property="noticeNo" column="NOTICE_NO" />
+		<result property="userNo" column="USER_NO" />
+		<result property="commentDeleteFlag" column="COMMENT_DEL_FL" />
+		<result property="parentNo" column="PARENT_NO" />
+		<result property="userName" column="USER_NAME" />
+		<result property="profileImage" column="PROFILE_IMG" />
+		<result property="role" column="ROLE" />
+	</resultMap>
+
+	<!-- 일반 공지사항 게시글 갯수 조회하기 -->
+	<select id="getListCount" resultType="_int">
+		SELECT COUNT(*) FROM NOTICE
+		WHERE NOTICE_STATUS = 1
+	</select>
+
+
+	<!-- 공지사항 조회하기 -->
+	<select id="selectAll" resultMap="notice_rm">
+		SELECT NOTICE_NO, NOTICE_TYPE,
+		NOTICE_TITLE, NOTICE_COMMENT_VIEW, NOTICE_STATUS,
+		TO_CHAR(CREATE_DT, 'YYYY-MM-DD') AS CREATE_DT,
+		TO_CHAR(UPDATE_DT, 'YYYY-MM-DD') AS UPDATE_DT,
+		NOTICE_CONTENT, READ_COUNT, USER_NO, USER_NAME,
+		(SELECT COUNT(*) FROM NOTICE_COMMENT C
+		WHERE C.NOTICE_NO = N.NOTICE_NO
+		AND COMMENT_DEL_FL = 1) COMMENT_COUNT
+		FROM NOTICE N
+		JOIN "USER" USING(USER_NO)
+		WHERE NOTICE_STATUS = 1
+		ORDER BY 1 DESC
+	</select>
+
+
+	<!-- 공지사항 상단 고정글 조회하기 -->
+
+	<select id="selectTopNotice" resultMap="notice_rm">
+		SELECT NOTICE_NO,
+		NOTICE_TYPE, NOTICE_TITLE, NOTICE_COMMENT_VIEW, NOTICE_STATUS,
+		TO_CHAR(CREATE_DT, 'YYYY-MM-DD') AS CREATE_DT,
+		TO_CHAR(UPDATE_DT, 'YYYY-MM-DD') AS UPDATE_DT,
+		NOTICE_CONTENT, READ_COUNT, USER_NO, USER_NAME,
+		(SELECT COUNT(*) FROM NOTICE_COMMENT C
+		WHERE C.NOTICE_NO = N.NOTICE_NO
+		AND COMMENT_DEL_FL = 1) COMMENT_COUNT
+		FROM NOTICE N
+		JOIN "USER" USING(USER_NO)
+		WHERE NOTICE_STATUS = 3
+		ORDER BY 1 DESC
+	</select>
+
+	<!-- 특정 게시판의 삭제되지 않고 검색 조건이 일치하는 게시글 수 조회 -->
+	<select id="getListCountForSearch" resultType="_int">
+		SELECT COUNT(*)
+		FROM NOTICE
+		WHERE NOTICE_STATUS = 1
+		AND (NOTICE_TITLE LIKE '%${query}%'
+		OR NOTICE_CONTENT LIKE '%${query}%')
+	</select>
+
+
+	<!-- 삭제되지 않고 검색 조건이 일치하는 공지사항 목록 조회 -->
+	<select id="getListForSearch" resultMap="notice_rm">
+		SELECT NOTICE_NO,
+		NOTICE_TYPE, NOTICE_TITLE, NOTICE_COMMENT_VIEW, NOTICE_STATUS,
+		TO_CHAR(CREATE_DT, 'YYYY-MM-DD') AS CREATE_DT,
+		TO_CHAR(UPDATE_DT, 'YYYY-MM-DD') AS UPDATE_DT,
+		NOTICE_CONTENT, READ_COUNT, USER_NO, USER_NAME,
+		(SELECT COUNT(*) FROM NOTICE_COMMENT C
+		WHERE C.NOTICE_NO = N.NOTICE_NO
+		AND COMMENT_DEL_FL = 1) COMMENT_COUNT
+		FROM NOTICE N
+		JOIN "USER"
+		USING(USER_NO)
+		WHERE NOTICE_STATUS = 1
+		AND (NOTICE_TITLE LIKE
+		'%${query}%'
+		OR NOTICE_CONTENT LIKE '%${query}%')
+		ORDER BY 1 DESC
+	</select>
+
+	<!-- 게시글 상세 조회 -->
+	<select id="selectNotice" resultMap="notice_rm">
+		SELECT NOTICE_NO,
+		NOTICE_TITLE, NOTICE_TYPE, NOTICE_CONTENT, USER_NO,
+		NOTICE_COMMENT_VIEW, NOTICE_COPY, NOTICE_STATUS,
+		TO_CHAR(CREATE_DT,'YYYY"년" MM"월" DD"일" HH24:MI:SS')CREATE_DT,
+		TO_CHAR(UPDATE_DT,'YYYY"년" MM"월" DD"일" HH24:MI:SS')UPDATE_DT,
+		READ_COUNT
+		FROM NOTICE
+		JOIN "USER" USING(USER_NO)
+		WHERE (NOTICE_STATUS
+		= 1
+		OR NOTICE_STATUS = 3)
+		AND NOTICE_NO = #{noticeNo}
+	</select>
+
+	<!-- 조회수 증가 -->
+	<update id="updateBoardCount">
+		UPDATE NOTICE SET
+		READ_COUNT = READ_COUNT + 1
+		WHERE NOTICE_NO = #{noticeNo}
+	</update>
+
+	<!-- 공지사항 최근 10개의 게시글 제목만 조회하기 -->
+	<select id="selectNoticeTitleList" resultMap="notice_rm">
+		SELECT ROWNUM, A.* FROM(
+		SELECT NOTICE_NO, NOTICE_STATUS, NOTICE_TITLE, NOTICE_TYPE
+		FROM NOTICE
+		ORDER BY NOTICE_NO DESC) A
+		WHERE ROWNUM BETWEEN 1 AND 10
+	</select>
+
+
+	<!-- 특정 게시글 댓글 리스트 조회 -->
+	<!-- <select id="selectCommentList" resultMap="comment_rm"> SELECT COMMENT_NO, 
+		COMMENT_CONTENT, COMMENT_DEL_FL, USER_NAME, USER_NO, <![CDATA[ CASE 
+		WHEN SYSDATE - C_CREATE_DATE < 1/24/60 THEN FLOOR( (SYSDATE - C_CREATE_DATE) 
+		* 24 * 60 * 60 ) || '초 전' WHEN SYSDATE - C_CREATE_DATE < 1/24 THEN FLOOR( 
+		(SYSDATE - C_CREATE_DATE) * 24 * 60) || '분 전' WHEN SYSDATE - C_CREATE_DATE 
+		< 1 THEN FLOOR( (SYSDATE - C_CREATE_DATE) * 24) || '시간 전' ELSE TO_CHAR(C_CREATE_DATE, 
+		'YYYY-MM-DD') END C_CREATE_DATE ]]> FROM NOTICE_COMMENT JOIN USER USING 
+		(USER_NO) WHERE NOTICE_NO = #{noticeNo} </select> -->
+
+
+	<!-- 특정 게시글 댓글 리스트 조회 -->
+	<select id="selectCommentList" resultMap="comment_rm">
+		SELECT LEVEL, C.* FROM
+		(SELECT COMMENT_NO, COMMENT_CONTENT,
+		        <![CDATA[
+					CASE  
+					   WHEN SYSDATE - C_CREATE_DATE < 1/24/60
+					   THEN FLOOR( (SYSDATE - C_CREATE_DATE) * 24 * 60 * 60 ) || '초 전'
+					   WHEN SYSDATE - C_CREATE_DATE < 1/24
+					   THEN FLOOR( (SYSDATE - C_CREATE_DATE) * 24 * 60) || '분 전'
+					   WHEN SYSDATE - C_CREATE_DATE < 1
+					   THEN FLOOR( (SYSDATE - C_CREATE_DATE) * 24) || '시간 전'
+					   ELSE TO_CHAR(C_CREATE_DATE, 'YYYY-MM-DD')
+					END C_CREATE_DATE,
+					]]>
+		NOTICE_NO, USER_NO, USER_NAME, PROFILE_IMG, PARENT_NO, COMMENT_DEL_FL, ROLE
+		FROM NOTICE_COMMENT
+		JOIN "USER" USING(USER_NO)
+		WHERE NOTICE_NO = #{noticeNo}
+		ORDER BY COMMENT_NO) C
+
+		START WITH PARENT_NO IS NULL
+		CONNECT BY PRIOR COMMENT_NO = PARENT_NO
+		ORDER
+		SIBLINGS BY COMMENT_NO
+	</select>
+
+	<!-- 공지사항 게시글 파일 조회 -->
+	<select id="selectFileList" resultMap="noticeFile_rm">
+		SELECT *
+		FROM FILES
+		WHERE
+		FILE_CODE = 1
+		AND TARGET_NO = #{noticeNo}
+	</select>
+
+
+	<!-- 게시글 등록하기 -->
+	<insert id="noticeInsert">
+		<selectKey order="BEFORE" resultType="_int"
+			keyProperty="noticeNo">
+			SELECT SEQ_NOTICE_NO.NEXTVAL FROM DUAL
+		</selectKey>
+
+		INSERT INTO NOTICE VALUES
+		(#{noticeNo},
+		#{noticeType},
+		#{noticeStatus},
+		#{noticeCommentView},
+		#{noticeCopy},
+		#{noticeTitle},
+		SYSDATE,
+		NULL,
+		#{noticeContent},
+		0,
+		#{userNo}
+		)
+	</insert>
+
+
+	<!-- 공지사항 파일 리스트 등록하기 -->
+	<insert id="insertFileList" parameterType="list">
+		INSERT INTO FILES
+		SELECT SEQ_FILE_NO.NEXTVAL, A.*
+		FROM (
+
+		<foreach collection="list" item="file" separator=" UNION ALL ">
+			SELECT #{file.filePath} FILE_PATH,
+			#{file.fileReName} FILE_RENAME,
+			#{file.fileOriginal} FILE_ORIGINAL,
+			#{file.fileOrder} FILE_ORDER,
+			'1' FILE_CODE,
+			#{file.targetNo} TARGET_NO
+			FROM DUAL
+		</foreach>
+		)A
+	</insert>
+
+
+	<!-- 공지사항 수정하기 -->
+	<update id="noticeUpdate">
+		UPDATE NOTICE SET
+		NOTICE_TITLE = #{noticeTitle},
+		NOTICE_CONTENT = #{noticeContent},
+		NOTICE_STATUS = #{noticeStatus},
+		NOTICE_COMMENT_VIEW = #{noticeCommentView},
+		NOTICE_COPY =
+		#{noticeCopy},
+		NOTICE_TYPE = #{noticeType},
+		UPDATE_DT = SYSDATE
+		WHERE
+		NOTICE_NO = #{noticeNo}
+	</update>
+
+	<!-- 공지사항 파일 삭제 -->
+	<delete id="fileDelete">
+		DELETE FROM FILES
+		WHERE TARGET_NO = #{targetNo}
+		AND FILE_CODE = 1
+		AND
+		FILE_ORDER IN ( ${deleteList} )
+	</delete>
+
+	<!-- 공지사항 파일 수정 -->
+	<update id="fileUpdate">
+		UPDATE FILES SET
+		FILE_RENAME = #{fileReName},
+		FILE_ORIGINAL = #{fileOriginal}
+		WHERE FILE_ORDER = #{fileOrder}
+		AND TARGET_NO = #{targetNo}
+	</update>
+
+	<!-- 이미지 삽입 -->
+	<insert id="fileInsert">
+		INSERT INTO FILES
+		VALUES(SEQ_FILE_NO.NEXTVAL,
+		#{filePath},
+		#{fileReName},
+		#{fileOriginal},
+		#{fileOrder},
+		1,
+		#{targetNo})
+	</insert>
+
+
+	<!-- 게시글 삭제 -->
+	<update id="noticeDelete">
+		UPDATE NOTICE SET
+		NOTICE_STATUS = 2
+		WHERE NOTICE_NO = #{noticeNo}
+	</update>
+	
+	<!-- 게시글 복구하기 -->
+	<update id="noticeRestore">
+		UPDATE NOTICE SET
+		NOTICE_STATUS = 1
+		WHERE NOTICE_NO = #{noticeNo}
+	</update>
+
+
+	<!-- 일반 공지사항 게시글 갯수 조회하기 -->
+	<select id="getDeleteListCount" resultType="_int">
+		SELECT COUNT(*) FROM NOTICE
+		WHERE NOTICE_STATUS = 2
+	</select>
+	
+	<!-- 삭제된 공지사항 조회하기 -->
+	<select id="selectDeleteAll" resultMap="notice_rm">
+		SELECT NOTICE_NO, NOTICE_TYPE,
+		NOTICE_TITLE, NOTICE_COMMENT_VIEW, NOTICE_STATUS,
+		TO_CHAR(CREATE_DT, 'YYYY-MM-DD') AS CREATE_DT,
+		TO_CHAR(UPDATE_DT, 'YYYY-MM-DD') AS UPDATE_DT,
+		NOTICE_CONTENT, READ_COUNT, USER_NO, USER_NAME,
+		(SELECT COUNT(*) FROM NOTICE_COMMENT C
+		WHERE C.NOTICE_NO = N.NOTICE_NO
+		AND COMMENT_DEL_FL = 1) COMMENT_COUNT
+		FROM NOTICE N
+		JOIN "USER" USING(USER_NO)
+		WHERE NOTICE_STATUS = 2
+		ORDER BY 1 DESC
+	</select>
+	
+	<!-- 삭제된 게시글 상세 조회 -->
+	<select id="selectNoticeDelete" resultMap="notice_rm">
+		SELECT NOTICE_NO,
+		NOTICE_TITLE, NOTICE_TYPE, NOTICE_CONTENT, USER_NO,
+		NOTICE_COMMENT_VIEW, NOTICE_COPY, NOTICE_STATUS,
+		TO_CHAR(CREATE_DT,'YYYY"년" MM"월" DD"일" HH24:MI:SS')CREATE_DT,
+		TO_CHAR(UPDATE_DT,'YYYY"년" MM"월" DD"일" HH24:MI:SS')UPDATE_DT,
+		READ_COUNT
+		FROM NOTICE
+		JOIN "USER" USING(USER_NO)
+		WHERE NOTICE_STATUS = 2
+		AND NOTICE_NO = #{noticeNo}
+	</select>
+
+
+	<!-- 삭제된, 검색 조건이 일치하는 공지사항 목록 조회 -->
+	<select id="getDeleteListCountForSearch" resultType="_int">
+		SELECT COUNT(*)
+		FROM NOTICE
+		WHERE NOTICE_STATUS = 2
+		AND (NOTICE_TITLE LIKE '%${query}%'
+		OR NOTICE_CONTENT LIKE '%${query}%')
+	</select>
+	
+	<!-- 삭제된, 검색 조건이 일치하는 공지사항 목록 조회 -->
+	<select id="getDeleteListForSearch" resultMap="notice_rm">
+		SELECT NOTICE_NO,
+		NOTICE_TYPE, NOTICE_TITLE, NOTICE_COMMENT_VIEW, NOTICE_STATUS,
+		TO_CHAR(CREATE_DT, 'YYYY-MM-DD') AS CREATE_DT,
+		TO_CHAR(UPDATE_DT, 'YYYY-MM-DD') AS UPDATE_DT,
+		NOTICE_CONTENT, READ_COUNT, USER_NO, USER_NAME,
+		(SELECT COUNT(*) FROM NOTICE_COMMENT C
+		WHERE C.NOTICE_NO = N.NOTICE_NO
+		AND COMMENT_DEL_FL = 1) COMMENT_COUNT
+		FROM NOTICE N
+		JOIN "USER"
+		USING(USER_NO)
+		WHERE NOTICE_STATUS = 2
+		AND (NOTICE_TITLE LIKE
+		'%${query}%'
+		OR NOTICE_CONTENT LIKE '%${query}%')
+		ORDER BY 1 DESC
+	</select>
+	
+	
+	<!-- 조회순으로 공지사항 정렬하기 -->
+	<select id="noticeArrayRead" resultMap="notice_rm">
+		SELECT NOTICE_NO, NOTICE_TYPE,
+		NOTICE_TITLE, NOTICE_COMMENT_VIEW, NOTICE_STATUS,
+		TO_CHAR(CREATE_DT, 'YYYY-MM-DD') AS CREATE_DT,
+		TO_CHAR(UPDATE_DT, 'YYYY-MM-DD') AS UPDATE_DT,
+		NOTICE_CONTENT, READ_COUNT, USER_NO, USER_NAME,
+		(SELECT COUNT(*) FROM NOTICE_COMMENT C
+		WHERE C.NOTICE_NO = N.NOTICE_NO
+		AND COMMENT_DEL_FL = 1) COMMENT_COUNT
+		FROM NOTICE N
+		JOIN "USER" USING(USER_NO)
+		WHERE NOTICE_STATUS = 1
+		AND (NOTICE_TITLE LIKE
+		'%${query}%'
+		OR NOTICE_CONTENT LIKE '%${query}%')
+		ORDER BY READ_COUNT DESC
+	</select>
+	
+	<!-- 댓글순으로 공지사항 정렬하기 -->
+	<select id="noticeArrayComment" resultMap="notice_rm">
+		SELECT NOTICE_NO, NOTICE_TYPE,
+		NOTICE_TITLE, NOTICE_COMMENT_VIEW, NOTICE_STATUS,
+		TO_CHAR(CREATE_DT, 'YYYY-MM-DD') AS CREATE_DT,
+		TO_CHAR(UPDATE_DT, 'YYYY-MM-DD') AS UPDATE_DT,
+		NOTICE_CONTENT, READ_COUNT, USER_NO, USER_NAME,
+		(SELECT COUNT(*) FROM NOTICE_COMMENT C
+		WHERE C.NOTICE_NO = N.NOTICE_NO
+		AND COMMENT_DEL_FL = 1) COMMENT_COUNT
+		FROM NOTICE N
+		JOIN "USER" USING(USER_NO)
+		WHERE NOTICE_STATUS = 1
+		AND (NOTICE_TITLE LIKE
+		'%${query}%'
+		OR NOTICE_CONTENT LIKE '%${query}%')
+		ORDER BY COMMENT_COUNT DESC
+	</select>
+
+</mapper>

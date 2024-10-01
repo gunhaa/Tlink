@@ -1,0 +1,403 @@
+/* *{border: 1px solid black;} */
+
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 100;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.otf) format('opentype');}
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 300;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.otf) format('opentype');}
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 400;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.otf) format('opentype');}
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 500;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.otf) format('opentype');}
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 700;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.otf) format('opentype');}
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 900;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.otf) format('opentype');}
+
+* {
+    font-family: 'Noto Sans KR', sans-serif;
+} 
+
+
+button {
+    cursor: pointer;
+    transition: background 0.5s ease, color 0.2s linear;
+}
+
+.btn-area button:hover{
+    background-color: #432674;
+}
+
+
+/* my-page 공통 */
+.content {
+    display: flex;
+    flex-direction: column;
+    margin: 100px 250px;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 24px;
+    margin: 50px 0;
+    cursor: default;
+}
+
+.card {
+    border: 3px solid#643BAB;
+    border-radius: 20px;
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 20px 20px 1px 0px #a78fd1;
+}
+
+.card-row {
+    height: 70px;
+    width: 1000px;
+    display: flex;
+    align-items: center;
+    
+}
+
+.row-title {
+    flex-basis: 12%;
+    text-align: center;
+    align-content: center;
+    font-weight: bold;
+}
+
+.row-content {
+    flex-basis: 86%;
+    text-align: end;
+    align-content: center;
+    border-bottom: 3px solid#643BAB;
+    height: 70px;
+    
+}
+
+.card input {
+    text-align: right;
+    border: 0;
+    outline: 0;
+    width: 90%;
+}
+
+.cursor-df{
+    cursor: default;
+}
+
+.card button {
+    background-color: white;
+    width: 70px;
+    height: 30px;
+    color:#643BAB;
+    border: 3px solid#643BAB;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+/* 마지막 .card-row의 .row-content에서 border-bottom 제거 */
+.card-row:last-child .row-content {
+    border-bottom: none;
+}
+
+/* 저장 버튼 */
+.btn-area {
+    display: flex;
+    justify-content: end;
+    gap: 10px;
+}
+
+.btn-area > button {
+    width: 100px;
+    height: 40px;
+    background-color: white;
+    border: 0;
+    border-radius: 10px;
+    background-color:#643BAB;
+    color: white;
+    font-weight: bold;
+}
+
+/* 약관 */
+.terms {
+    margin-left: 10px;
+    width: 1000px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    font-size: 12px;
+}
+
+.agree{
+    margin-left: 10px;
+    flex-basis: 95%;
+    font-weight: bold;
+}
+
+/* 프로젝트 영역 */
+
+/* 검색창 */
+.fa-file-circle-plus{
+    color: #643BAB;
+    cursor: pointer;
+}
+
+.search-area {
+    display: flex;
+    height: 150px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.search-area>.search-bar {
+    width: 500px;
+    height: 60px;
+    border-radius: 30px;
+    border: 3px solid#643BAB;
+    display: flex;
+}
+
+.search-area>.search-bar>.glass {
+    color:#643BAB;
+    font-size: 30px;
+    padding: 12px;
+}
+
+.search-area>.search-bar>input {
+    width: 400px;
+    border: none;
+    outline: none;
+    border-radius: 30px;
+    margin-left: 30px;
+}
+
+/* 자동완성 */
+.match{
+    color: #643BAB;
+    font-weight: bold;
+}
+
+#autocomplete{
+    height: 0px;
+}
+
+#autocomplete > ul{
+    position: relative;
+    z-index: 2000;
+    background-color: white; 
+    border: 1px solid #ccc;
+    border-top: none;
+    width: 450px;
+    padding: 0;
+}
+
+#autocomplete > ul > li{
+    list-style-type: none;
+    padding: 10px;
+    cursor: pointer;
+    
+}
+
+#autocomplete > ul > li:hover{
+    background-color: #643BAB;
+    color: white;
+}    
+
+#autocomplete > ul > li:hover .match{
+    color: white;
+}
+
+
+/* 프로젝트 */
+.projects {
+    height: 300px;
+    width: 1000px;
+}
+
+
+.project {
+    border: 3px solid#643BAB;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.6s ease, color 0.2s linear;
+}
+
+.project:hover {
+    background-color:#643BAB;
+}
+
+.project:hover .project-title {
+    color: white;
+}
+
+.project:hover .project-info {
+    color: white;
+}
+
+.project-title {
+    padding: 10px 0 0 10px;
+    font-size: 20px;
+    font-weight: 900;
+    height: 15%;
+    color:#643BAB;
+}
+
+.thumbnail {
+    height: 65%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.thumbnail>img {
+    width: 60%;
+    height: auto;
+}
+
+.project-info {
+    font-size: 12px;
+    padding-left: 10px;
+    color:#643BAB;
+    font-weight: bold;
+}
+
+/* 프로젝트가 없을 경우 */
+.empty{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.create{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.empty img{
+    width: 500px;
+    height: 150px;
+}
+
+/* 마이페이지 전 */
+.container2{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.small-logo{
+    width: 200px; 
+    height: 60px; 
+    background-image: url("/resources/images/common/TLink_logo.png"); 
+    background-size: contain; 
+    background-repeat: no-repeat; 
+    background-position: center; 
+    position: absolute;
+    top: 10px;
+    cursor: pointer;
+}
+
+.explanation{
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* 멤버 */
+.member-project-title{
+    flex-basis: 100%;
+    margin-left: 20px;
+    text-align: left;
+    align-content: center;
+    font-weight: bold;
+    font-size: 20px;
+    color: #643BAB;
+}
+
+.member-list{
+    width: 950px;
+    height: 300px;
+    margin-bottom: 30px;
+    overflow-y: scroll;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.member{
+    height: 80px;
+    display: flex;
+    gap: 10px;
+}
+
+.member-profile{
+    width: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.member-profile>img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.member-name{
+    align-content: center;
+    font-weight: bold;
+}
+
+.member-email{
+    align-content: center;
+    font-size: 12px;
+    color: gray;
+}
+
+.fa-user-xmark{
+    align-content: center;
+    font-size: 14px;
+    color: #643BAB;
+    cursor: pointer;
+}
+
+/* 스크롤바 */
+.member-list::-webkit-scrollbar {
+    width: 12px; /* 스크롤바의 너비 */
+    height: 12px; /* 수평 스크롤바의 높이 (필요한 경우) */
+}
+
+/* 스크롤바 핸들 (사용자가 드래그하는 부분) */
+.member-list::-webkit-scrollbar-thumb {
+    background: #643BAB; /* 핸들의 색상 */
+    border-radius: 30px; /* 핸들의 둥근 모서리 */
+}
+
+/* 스크롤바 핸들의 호버 상태 */
+.member-list::-webkit-scrollbar-thumb:hover {
+    background: #432674; /* 핸들에 마우스를 올렸을 때 색상 */
+}
+
+/* 위임 */
+select{
+    border: 3px solid #643BAB;
+    outline: none;
+    border-radius: 5px;
+    width: 100px;
+    height: 30px;
+}
+
+.error{
+    color: red;
+}
+
+.confirm{
+    color: forestgreen;
+}
+
+
+
+
+

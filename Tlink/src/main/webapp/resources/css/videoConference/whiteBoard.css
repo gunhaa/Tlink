@@ -1,0 +1,97 @@
+#whiteboard-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 600px;
+    height: 600px;
+    border: 1px solid black;
+    background-color: white;
+    display:flex;
+    flex-direction:column;
+}
+
+
+
+
+/* 버튼 */
+#button-container {
+    margin-top: 640px;
+	 width: auto;
+    height: 150px;
+    position: relative;
+}
+
+#btn-box {
+    /* background-color: bisque; */
+    margin-top: 40px;
+    margin-left: 0px;
+    width: 500px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    position: relative;
+}
+
+
+.btn {
+    cursor: pointer;
+    background-color: #8839AE;
+    color: white;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    /* 진한 회색 그림자 */
+}
+
+.btn:hover {
+    background-color:rgb(128,94,186);
+}
+
+.btn1 {
+    border-radius: 10px;
+    width: 120px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin: 0 0 15px 15px;
+}
+
+.btn2 {
+	 cursor: pointer;
+    color: white;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+/*     border-radius: 10px;
+    width: 120px; */
+    height: 50px;
+    border:none;
+    margin: 0 0 15px 15px;
+    
+}
+
+#blackPen{
+	background-color : #000000;
+}
+
+#bluePen{
+	background-color : #0000FF;
+}
+
+#redPen{
+	background-color : #FF0000;
+}
+
+#exit-btn {
+    background-color: rgb(227, 58, 58);
+    border-radius: 5px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 50px;
+    position: absolute;
+    right: 70px;
+    top: 4px;
+    font-size: 18px;
+}

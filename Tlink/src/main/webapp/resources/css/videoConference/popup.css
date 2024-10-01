@@ -1,0 +1,473 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* 박스 모델을 border-box로 설정하여 패딩과 보더를 요소의 총 너비에 포함 */
+}
+
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 100;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.otf) format('opentype');}
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 300;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.otf) format('opentype');}
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 400;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.otf) format('opentype');}
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 500;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.otf) format('opentype');}
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 700;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.otf) format('opentype');}
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 900;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.otf) format('opentype');}
+
+* {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+#main-container {
+    display: flex;
+    flex-direction: column;
+}
+
+
+#title-container {
+    width: auto;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* 박스 모델을 border-box로 설정하여 패딩과 보더를 요소의 총 너비에 포함 */
+}
+
+#main-container {
+    display: flex;
+    flex-direction: column;
+}
+
+
+#title-container {
+    width: auto;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+}
+
+#middle-container {
+    width: auto;
+    height: 580px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 비디오 컨테이너 */
+
+#video-container {
+    /* background-color: yellow; */
+    width: 600px;
+    height: 580px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+video {
+    border: 1px solid black;
+    /* width: 220px;
+        height: 220px; */
+    margin: 10px;
+    /* background-color: aquamarine; */
+    /* border: 2px solid black; */
+    border-radius: 10px;
+    /* display: flex; */
+    /* align-items: center; */
+    /* justify-content: center; */
+    z-index:80;
+}
+
+.nameTag1 {
+    position: absolute;
+    top: 30px;
+    left: 250px;
+}
+
+.nameTag2 {
+    position: absolute;
+    top: 15px;
+    left: 120px;
+}
+
+.videoParent {
+    position: relative;
+}
+
+
+
+
+
+#chat-container {
+    border: 1px solid rgb(216, 216, 216);
+    width: 300px;
+    height: 560px;
+    border-radius: 20px;
+    margin-right: 15px;
+}
+
+.chat-itembox {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    font-size: 30px;
+    overflow-y: scroll;
+    border-radius: 20px 20px 0px 0px;
+    text-align: left;
+}
+
+.today {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left:10px;
+    font-size: 9px;
+    color : grey;
+}
+
+.chat-itembox::-webkit-scrollbar {
+    width: 10px;
+}
+
+.chat-itembox::-webkit-scrollbar-thumb {
+    background-color: #2f3542;
+}
+
+.chat-itembox::-webkit-scrollbar-track {
+    background-color: #dbd3d3;
+}
+
+.chat-item {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.chat-prof-img {
+    border-radius: 100%;
+    height: 35px;
+    width: 35px;
+    border: 1px solid grey;
+    margin-left: 3px;
+    object-fit: cover;
+	flex-shrink: 0;
+}
+
+.chat-id {
+    color: rgb(200, 200, 200);
+    font-size: 12px;
+    font-weight: 300;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+    white-space: nowrap;
+    width: 50px;
+}
+
+.chat-content {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 250px;
+    overflow: hidden;
+}
+
+.chat-block:hover {
+    background-color: rgb(216, 216, 216);
+}
+
+.chat-inputbox {
+    height: 10%;
+    width: 100%;
+    border-radius: 0px 0px 20px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.chat-background {
+    border-radius: 40px;
+    width: 70%;
+    height: 65%;
+    margin-right: 7px;
+    background-color: rgb(245, 245, 245);
+}
+
+.chat-input {
+
+    width: 95%;
+    height: 95%;
+    padding-left: 10px;
+    margin-right: 40px;
+    background-color: transparent;
+    border: none;
+
+}
+
+input:focus {
+    outline: none;
+}
+
+/* outline 테두리 없애기 */
+
+/* 버튼 */
+#button-container {
+    width: auto;
+    height: 119px;
+    position: relative;
+}
+
+#btn-box {
+    /* background-color: bisque; */
+    margin-top: 40px;
+    margin-left: 50px;
+    width: 500px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    position: relative;
+}
+
+
+.btn {
+    cursor: pointer;
+    background-color: #8839AE;
+    color: white;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    /* 진한 회색 그림자 */
+}
+
+.btn:hover {
+    background-color:rgb(128,94,186);
+}
+
+.btn1 {
+    border-radius: 10px;
+    width: 120px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin: 0 0 15px 15px;
+}
+
+.btn2 {
+	width : 30px;
+	height : 30px;
+	margin-left : 7px;
+	border : none;
+	border-radius : 10px;
+}
+
+#exit-btn {
+    background-color: rgb(227, 58, 58);
+    border-radius: 5px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 50px;
+    position: absolute;
+    right: 70px;
+    top: 4px;
+    font-size: 18px;
+}
+
+
+
+.optionbox {
+    position: absolute;
+    z-index: 5;
+    width: 200px;
+    height: 80px;
+    right: -50px;
+    bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.options1 {
+    text-align: center;
+    width: 100%;
+    height: 50%;
+    padding-top: 8px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.options1:hover {
+    width: 100%;
+    height: 50%;
+    background-color: rgb(128,94,186);
+    border-radius: 10px 10px 0 0;
+}
+
+.options2 {
+    text-align: center;
+    width: 100%;
+    height: 50%;
+    padding-top: 8px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.options2:hover {
+    width: 100%;
+    height: 50%;
+    background-color: rgb(128,94,186);
+    border-radius: 0 0 10px 10px;
+}
+
+
+
+/* 모달 */
+.modal-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 2;
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#content-box1 {
+    width: 500px;
+    height: 200px;
+    background-color: white;
+    z-index: 3;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#content-box2 {
+    width: 500px;
+    height: 250px;
+    background-color: white;
+    z-index: 3;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#content-box-wrapper1 {
+    width: 450px;
+    z-index: 4;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#content-box-wrapper2 {
+    width: 450px;
+    z-index: 4;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+#content-box-item1 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 30px;
+}
+
+#content-box-item2 {
+    margin-top: 20px;
+    height: 40px;
+    width: 450px;
+    border-radius: 10px;
+    padding-top: 5px;
+}
+
+#content-box-item2::placeholder {
+    font-size: 16px;
+    text-align: center;
+}
+
+#content-box-item3 {
+    width: 80px;
+    height: 35px;
+    border: none;
+    position: absolute;
+    right: 110px;
+    bottom: -60px;
+    border-radius: 10px;
+}
+
+#content-box-item4 {
+    width: 80px;
+    height: 35px;
+    border: none;
+    position: absolute;
+    right: 10px;
+    bottom: -60px;
+    border-radius: 10px;
+}
+
+/* js용 class */
+.none {
+    display: none;
+}
+
+
+#middle-container {
+    width: auto;
+    height: 580px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 비디오 컨테이너 */
+
+#video-container {
+    /* background-color: yellow; */
+    width: 600px;
+    height: 580px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+video {
+    border: 1px solid black;
+    /* width: 220px;
+    height: 220px; */
+    margin: 10px;
+    /* background-color: aquamarine; */
+    /* border: 2px solid black; */
+    border-radius: 10px;
+    /* display: flex; */
+    /* align-items: center; */
+    /* justify-content: center; */
+}
+
+
+
+

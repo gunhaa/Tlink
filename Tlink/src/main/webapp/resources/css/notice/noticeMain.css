@@ -1,0 +1,211 @@
+*{
+    box-sizing: border-box;
+    /* border: 1px solid black; */
+}
+
+.all-container{
+    width: 100%;
+    display: flex;
+    height: 100%;
+}   
+
+
+.notice-main{
+    width: calc(100% - 350px);
+    height: 100%;
+}
+
+.main-top{
+    width: 100%;
+    height: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.main-top img{
+    width: 350px;
+    height: 100px;
+}
+
+.main-middle{
+    width: calc(100% - 300px);
+    margin-left: 150px;
+    margin-right: 150px;
+    height: 10%;
+}
+
+/* 공지사항 텍스트, 게시글 생성 버튼 영역 */
+.main-middle>div:nth-child(1){
+    width: 100%;
+    margin-top: 20px;
+    font-size: 32px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+#deletedNotice{
+    margin-left: 910px;
+    color: white;
+    font-weight: bold;
+}
+#insertNotice{
+    margin-left: 10px;
+}
+
+.main-middle>div:nth-child(1)>span>a{
+    text-decoration: none;
+    color: black;
+}
+
+.main-middle>div:nth-child(1)>button{
+    border-radius: 20px;
+    background-color: #643BAB;
+    border: none;
+    width: 100px;
+    height: 25px;
+}
+
+.main-middle>div:nth-child(1)>button>a{
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+/* 정렬 + 검색하기 영역 */
+.main-middle>div:nth-child(2){
+    width: 100%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.main-middle>div:nth-child(2)>div>button{
+    border-radius: 20px;
+    border: 1px solid #643BAB;
+    background-color: transparent;
+    width: 120px;
+    height: 30px;
+    font-weight: bold;
+}
+
+.main-middle>div:nth-child(2)>fieldset{
+    width: 300px;
+    border-radius: 30px;
+    height: 35px;
+    border: 3px solid #643BAB;
+    display: flex;
+    align-items: center;
+}
+
+.main-middle>div:nth-child(2)>fieldset>form>input{
+    width: 85%;
+    height: 22px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+}
+
+.main-middle>div:nth-child(2)>fieldset>form>button{
+    border: none;
+    outline: none;
+    background-color: transparent;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.main-middle>div:nth-child(2)>fieldset>form>button>i{
+    color: #643BAB;
+    margin-left: 2px;
+}
+
+/* 게시글 포함 영역 */
+.notice-main>article:nth-child(3){
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+/* 게시글 테이블 영역 */
+.list-table{
+    width: 100%;
+    margin: 10px 150px 20px 150px;
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
+.list-table a{
+    text-decoration: none;
+    color: black;
+}
+
+
+.list-wrapper{
+    min-height: 670px;
+    width: 100%;
+}
+
+.list-table{
+    width: 100%;
+    padding: 20px;
+    border-collapse: collapse;
+}
+
+.list-table > thead{ background-color: #643BAB; color: white;}
+
+.list-table tr{
+    height: 50px;
+}
+
+.list-table > tbody > tr{
+    border-bottom: 1px solid gray;
+}
+
+.list-table tr > *{ text-align: center; }
+
+.topNoticeTr{
+    background-color: #dcd1f0;
+}
+
+.list-table tr > *:nth-of-type(1){ width: 10%; }
+.list-table tr > *:nth-of-type(2){ width: 55%; }
+.list-table tr > *:nth-of-type(3){ width: 15%; }
+.list-table tr > *:nth-of-type(4){ width: 10%; }
+.list-table tr > *:nth-of-type(5){ width: 10%; }
+
+
+/* ------------------------------------------------------------------------------------ */
+
+.pagination-area{margin-bottom: 50px;}
+
+.pagination{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+}
+
+.pagination li{
+    width: 20px;
+    margin: 0 5px;
+    text-align: center;
+}
+
+.pagination a{
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: black;
+}
+
+.current{
+    font-weight: bold;
+    background-color: #643BAB;
+    border-radius: 50%;
+    color: white !important;
+    letter-spacing: 0 !important;
+}

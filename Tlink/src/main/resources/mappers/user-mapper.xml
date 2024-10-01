@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="userMapper">
+
+    
+   <resultMap type="User" id="user_rm">
+   
+      <!-- DB의 기본 키(복합키면 여러 개 작성) -->
+      <id property="userNo" column="USER_NO" />
+
+      <!-- DB의 일반 컬럼들 -->
+      <result property="userEmail" column="USER_EMAIL" />
+      <result property="userPw" column="USER_PW" />
+      <result property="userName" column="USER_NAME" />
+      <result property="userPhone" column="USER_PHONE" />
+      
+      <result property="userAddr" column="USER_ADDR" />
+      
+      <result property="profileImg" column="PROFILE_IMG" />
+      <result property="enrollDate" column="ENROLL_DATE" />
+<!-- <result property="userDeleteFlag" column="USER_DEL_FL" /> -->
+      <result property="role" column="ROLE" />
+   </resultMap>
+   
+   <resultMap type="Project" id="project_rm">
+   		<id property="projectNo" column="PROJECT_NO"/>
+   		
+        <result property="projectTitle" column="PROJECT_TITLE"/>
+        <result property="projectInfo" column="PROJECT_INFO"/>
+        <result property="createDate" column="CREATE_DATE"/>
+        <result property="manager" column="MANAGER"/>
+        <result property="userCount" column="USER_COUNT"/>
+   </resultMap>
+   
+
+	
+	<!-- 로그인 -->
+	<select id="login" parameterType="User" resultMap="user_rm">
+		SELECT USER_NO, USER_EMAIL, USER_NAME, USER_PHONE, USER_ADDR, PROFILE_IMG, ENROLL_DATE, ROLE, USER_PW
+		FROM "USER"
+		WHERE USER_EMAIL = #{userEmail}
+		AND USER_DEL_FL = 'N'
+	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="signUp" parameterType="User">
+		INSERT INTO "USER"
+		VALUES(SEQ_USER_NO.NEXTVAL,
+		 #{userEmail},
+		 #{userPw},
+		 #{userName},
+		 #{userPhone},
+		 #{userAddr},
+		 NULL, DEFAULT, DEFAULT, DEFAULT)
+	</insert>
+	
+	<!-- 이메일 중복 검사 -->
+	<select id="selectDupEmail" resultType="_int">
+		SELECT COUNT(*) FROM
+		"USER"
+		WHERE USER_EMAIL = #{email}
+		AND USER_DEL_FL = 'N'
+	</select>
+	
+	<!-- 프로젝트 리스트 조회 -->
+	 <select id="selectProjectList" resultMap="project_rm">
+		SELECT 
+		    p.PROJECT_NO,
+		    p.PROJECT_TITLE,
+		    p.PROJECT_INFO,
+		    p.CREATE_DATE,
+		    p.MANAGER,
+		    COUNT(up.USER_NO) AS USER_COUNT
+		FROM "PROJECT" p
+		LEFT JOIN USER_PROJECT up ON p.PROJECT_NO = up.PROJECT_NO
+		LEFT JOIN "USER" u ON up.USER_NO = u.USER_NO AND u.USER_DEL_FL = 'N'
+		WHERE p.PROJECT_NO IN (
+		    SELECT PROJECT_NO
+		    FROM USER_PROJECT
+		    WHERE USER_NO = #{userNo}
+		)
+		GROUP BY p.PROJECT_NO, p.PROJECT_TITLE, p.PROJECT_INFO, p.CREATE_DATE, p.MANAGER
+    </select>
+    
+    <!-- 관리자 생성 -->
+    <insert id="createAdmin" parameterType="User">
+    	INSERT INTO "USER"
+		VALUES(SEQ_USER_NO.NEXTVAL,
+		 #{userEmail},
+		 #{userPw},
+		 #{userName},
+		 #{userPhone},
+		 #{userAddr},
+		 NULL, DEFAULT, #{role}, DEFAULT)
+    </insert>
+	
+	
+	
+</mapper>

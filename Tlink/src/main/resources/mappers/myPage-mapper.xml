@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="myPageMapper">
+
+   <resultMap type="User" id="user_rm">
+   
+      <!-- DB의 기본 키(복합키면 여러 개 작성) -->
+      <id property="userNo" column="USER_NO" />
+
+      <!-- DB의 일반 컬럼들 -->
+      <result property="userEmail" column="USER_EMAIL" />
+      <result property="userPw" column="USER_PW" />
+      <result property="userName" column="USER_NAME" />
+      <result property="userPhone" column="USER_PHONE" />
+      
+      <result property="userAddr" column="USER_ADDR" />
+      
+      <result property="profileImg" column="PROFILE_IMG" />
+      <result property="enrollDate" column="ENROLL_DATE" />
+<!-- <result property="userDeleteFlag" column="USER_DEL_FL" /> -->
+      <result property="role" column="ROLE" />
+   </resultMap>
+
+
+	<select id="selectCurrentPw" resultType="string">
+		SELECT USER_PW FROM
+		"USER"
+		WHERE USER_NO = #{userNo}
+	</select>
+
+	<update id="changePw">
+		UPDATE "USER" SET
+		USER_PW = #{newPw}
+		WHERE USER_NO =
+		#{userNo}
+	</update>
+
+	<update id="secession">
+		UPDATE "USER" SET
+		USER_DEL_FL = 'Y'
+		WHERE USER_NO =
+		#{userNo}
+	</update>
+
+	<!-- 프로필 이미지 변경 -->
+	<update id="updateProfile">
+		UPDATE "USER" SET
+		PROFILE_IMG = #{profileImg}
+		WHERE
+		USER_NO = #{userNo}
+	</update>
+
+	<update id="deleteProfile">
+		UPDATE "USER" SET
+		PROFILE_IMG = NULL
+		WHERE USER_NO =
+		#{userNo}
+	</update>
+
+	<update id="updateinfo">
+		UPDATE "USER" SET
+		USER_PHONE = #{userPhone},
+		USER_ADDR = #{userAddr}
+		WHERE USER_NO = #{userNo} 
+	</update>
+	
+	<!-- 관리자 목록 -->
+	<select id="selectAdmin" resultMap="user_rm">
+		SELECT USER_NO, USER_NAME, USER_EMAIL, "ROLE" FROM "USER"
+		WHERE (ROLE = 'S' OR ROLE = 'A')
+		AND USER_DEL_FL = 'N'
+		ORDER BY USER_NO
+	</select>
+
+</mapper>

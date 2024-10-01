@@ -1,0 +1,206 @@
+body{
+    display: flex;
+    height: 1000px;
+}
+
+
+#calendar-container {
+    width: calc(100% - 350px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#calendar {
+    width: 80%;
+    height: 80%;
+}
+
+#calendar div{
+    overflow: visible !important; 
+}
+
+#scheduleModal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+}
+
+#scheduleModal>div{
+    display: none;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    border: 1px solid #888;
+    width: 600px;
+    min-height: 200px;
+    max-height: 700px;
+    border-radius: 20px;
+    top: 50px;
+    right: 500px;
+    position: absolute;
+}
+
+.modal-content > div:nth-child(1){
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #888;
+    margin-top: 5px;
+    height: 50px;
+}
+
+.modal-content > div:nth-child(1)>span:nth-child(1){
+    margin-left: 20px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close{
+    font-size: 28px;
+    font-weight: bold;
+    color: #888;
+    margin-right: 20px;
+}
+
+.eachForm{
+    display: flex;
+    align-items: center;
+    margin: 10px 20px;
+    width: 560px;
+    height: 50px;
+    border: 1px solid #888;
+    border-radius: 10px;
+}
+
+#insertEvent>form:nth-child(2)>div>div:nth-child(2){height: 200px;}
+
+#insertHoliday>form:nth-child(2)>div>div:nth-child(3){height: 200px;}
+
+#detailEvent>form:nth-child(2)>div>div:nth-child(1){height: 200px;}
+
+#detailHoliday>form:nth-child(2)>div>div:nth-child(2){height: 200px;}
+
+.eachForm>div{
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid #888;
+    height: 100%;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.eachForm>input,
+.eachForm>textarea{
+    width: 80%;
+    height: 80%;
+    border: none;
+    outline: none;
+    font-size: 18px;
+    margin-left: 5px;
+}
+
+.eachForm>textarea{
+    height: 180px;
+    resize: none;
+}
+
+#holidayFile{
+    margin-top: 10px;
+}
+
+.addBtn{
+    margin: 10px 0 10px 20px;
+    padding: 10px 20px;
+    background-color: #643BAB;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+}
+
+.addScheduleBtn{
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: #643BAB;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+}
+
+.btnArea{
+    display: flex;
+    align-items: center;
+    margin: 10px 20px;
+    width: 560px;
+    height: 50px;
+}
+
+.btnArea>div{
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 360px;
+    margin-bottom: 10px;
+}
+
+#insertEventBtnArea, #insertHolidayBtnArea{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+}
+
+.updateBtn, .deleteBtn{
+    padding: 10px 20px;
+    background-color: #643BAB;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+}
+
+.choicedText{
+    font-weight: bold;
+}
+
+
+.blank{margin-left: 5px;}
+
+.blank>a{
+    text-decoration: none;
+    color: black;
+}
+
+#lastEachForm{
+    margin-bottom: 0;
+}
+
+.info-text{
+    font-size: 14px;
+    margin-left: 120px;
+    margin-bottom: 20px;
+}
+
+.movePoint {
+    cursor: move;
+  }

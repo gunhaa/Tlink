@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="todoRestMapper">
+	
+	
+    <resultMap type="Todo" id="todo_rm">
+      <id     property="todoNo" column="TODO_NO"/>
+      <result property="todoTitle" column="TODO_TITLE"/>
+      <result property="todoContent" column="TODO_CONTENT"/>
+      <result property="createDate" column="CREATE_DT"/>
+      <result property="updateDate" column="UPDATE_DT"/>
+      <result property="todoState" column="TODO_PR_ST"/>
+      <result property="todoManager" column="TODO_MN_NO"/>
+      <result property="parentNo" column="PARENT_NO"/>
+      <result property="projectNo" column="PROJECT_NO"/>
+      
+
+   </resultMap>
+	
+	
+	<select id="todoTList" resultMap="todo_rm">
+		SELECT * FROM TODO
+		WHERE TODO_MN_NO=#{userNo}
+		AND PROJECT_NO=#{projectNo}
+		AND TODO_ST=1
+	</select>
+	
+	
+	<update id="updateTodoState">
+		UPDATE TODO SET
+		TODO_PR_ST=#{todoState}
+		WHERE TODO_NO=#{todoNo}
+		AND PROJECT_NO=#{projectNo}
+	</update>
+	
+	
+	
+	<insert id="insertTodo">
+		INSERT INTO TODO
+		VALUES(
+			SEQ_TODO_NO.NEXTVAL, DEFAULT, DEFAULT, 
+			DEFAULT, DEFAULT, DEFAULT, #{todoState},
+			#{userNo}, DEFAULT, #{projectNo}
+		)
+	</insert>
+	<select id="selectTodoNo" resultType="_int">
+		SELECT SEQ_TODO_NO.CURRVAL
+		FROM DUAL
+	</select>
+	<select id="selectTodo" resultMap="todo_rm">
+		SELECT *
+		FROM TODO
+		WHERE TODO_NO=#{todoNo}
+	</select>
+	
+	<delete id="deleteTodo">
+		UPDATE TODO SET
+		TODO_ST=0
+		WHERE TODO_NO=#{todoNo}
+	</delete>
+	
+	<update id="updateTodoTitle">
+		UPDATE TODO SET
+		TODO_TITLE= #{todoTitle}
+		WHERE TODO_NO=#{todoNo}
+	</update>
+	
+	
+	
+</mapper>

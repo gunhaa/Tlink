@@ -1,0 +1,379 @@
+*{box-sizing: border-box;}
+
+.all-container{
+    width: 100%;
+    display: flex;
+    height: 100%;
+}
+
+.all-container>main>.container{height: 100%;}
+
+.notice-main{
+    width: calc(100% - 350px); /* 전체 너비에서 350px을 뺀 값 */
+    height: 100%;
+}
+
+/* 로고 영역 */
+.main-top{
+    width: 100%;
+    height: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+/* 로고 */
+.main-top img{
+    width: 350px;
+    height: 100px;
+}
+
+
+/* 게시글 제목 영역 */
+.main-title-area{
+    width: calc(100% - 300px);
+    margin-left: 150px;
+    margin-right: 150px;
+    height: 50px;
+    font-size: 28px;
+    font-weight: bold;
+    border-bottom: 1px solid black;
+    padding-left: 20px;
+    margin-top: 50px;
+}
+
+.main-title-area>div{
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* 표시할 줄 수 */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+}
+
+.notice-main>article:nth-child(3){
+    width: calc(100% - 300px);
+    margin-left: 150px;
+    margin-right: 150px;
+    height: 100%;
+    display: flex;
+}
+
+/* -------------------------------------------------------------------------------------------------- */
+/* 사이드의 게시글 제목들 영역*/
+.titleNav{
+    width: 20%;
+    max-height: 100%;
+    position: relative; 
+}
+
+.titleNav > div:nth-child(1),
+.titleNav > div:nth-child(2) {
+    position: sticky; /* 스크롤을 따라 움직이도록 설정 */
+    top: 10px; /* 고정되는 시작 지점 */
+    z-index: 10; /* 다른 요소 위에 표시되도록 설정 */
+    background-color: white; /* 배경색 추가하여 뒤 요소와 구분 */
+    padding: 10px; /* 패딩 조정 */
+}
+
+
+.TLINK-title{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.titleNav>div:nth-child(1)>div:nth-child(1){
+    width: 100%;
+    margin-left: 5px;
+    min-height: 200px;
+    max-height: 400px;
+    margin-top: 10px;
+    border: 1px solid black;
+    overflow: hidden; 
+    padding-bottom: 10px;
+    padding-right: 5px;
+}
+
+
+.titleNav>div:nth-child(1)>div:nth-child(1)>div:nth-child(1){
+    margin-left: 5px;
+    margin-top: 10px;
+    height: 50px;
+}
+
+.listTitle{
+    width: 90%;
+    min-height: 45px;
+    max-height: 55px;
+    margin: 2px 10px;
+    display: flex;
+    align-items: center;
+}
+
+.listTitle > a{
+    text-decoration: none;
+    color: black;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 표시할 줄 수 */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+}
+
+/* 버튼 영역(목록으로, 수정하기, 삭제하기) */
+.btn-area{
+    width: 100%;
+    height: 50px;
+    margin: 10px 5px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-area button{
+    width: 110px;
+    height: 30px;
+    background-color: transparent;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0;
+}
+
+.btn-area>button:nth-child(1){width: 100%;}
+
+.btn-area a{
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    text-decoration: none;
+    color: black;
+}
+
+.btn-area>div{
+    width: 100%;
+    margin-right: 15px;
+    display: flex;
+    margin-top: 10px;
+    justify-content: space-between;
+}
+
+
+
+/* -------------------------------------------------------------------------------------------------- */
+/* 게시글 상세내용 전체 */
+.main-container{
+    width: 80%;
+    height: 100%;
+}
+
+.writer-info{
+    width: 100%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.writer-info>img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-left: 20px;
+}
+
+.comment-view{
+    width: 100%;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    border-top: 1px solid black;
+    font-weight: bold;
+}
+
+.writer-info p{
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 0 10px;
+}
+
+
+.writer-info span{
+    font-size: 14px;
+    margin: 0 0 0 10px;
+    color: #aaa;
+}
+
+/*  첨부파일 영역 */
+.file-download{
+    width: 100%;
+    height: 40px;
+    margin: 10px 0;
+    background-color: #dcd1f0;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+}
+
+.file-download>a{
+    text-decoration: none;
+    color: black;
+    margin-left: 10px;
+}
+
+/* 글 영역 */
+.text-area{
+    width: 100%;
+    min-height: 200px;
+    margin-bottom: 10px;
+}
+
+/* 이미지 영역 */
+.images-area {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.images-area > img {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    display: block;
+    border: none;
+}
+
+.images-area:last-of-type{
+    margin-bottom: 30px;
+}
+/* -------------------------------------------------------------------- */
+/* 댓글 */
+
+.comment-area{
+    width: 100%;
+    min-height: 100px;
+}
+
+.comment-write-area {
+	display: flex;
+	min-height: 85px;
+	justify-content: center;
+	margin: 30px 0;
+}
+
+.comment-write-area > textarea{
+	flex-basis: 100%;
+    margin-right: 10px;
+	resize: none;
+}
+
+.comment-write-area > button{
+	flex-basis: 7%;
+    height: 85px;
+	font-weight: bold;
+    border: 0;
+    background-color: #643BAB;
+    color: white;
+    cursor: pointer;
+}
+
+#commentList{
+	padding: 0;
+	list-style: none;
+}
+
+.comment-writer {
+	display: flex;
+	align-items: center;
+}
+
+.comment-writer > img{
+	width: 40px;
+    height: 40px;
+	border-radius: 50%;
+}
+
+.comment-writer  span{
+    font-weight: bold;
+    margin-left : 10px;
+}
+
+.comment-date{
+	font-size: 0.8em;
+	color: #aaa;
+}
+
+.comment-content{
+    margin-left: 50px;
+}
+
+.comment-btn-area { 
+	display: flex;
+	justify-content: flex-end;
+}
+
+/* 버튼 */
+.comment-btn-area button{
+    width: 50px;
+    height: 30px;
+	margin-left: 10px;
+    font-weight: bold;
+    border: 0;
+    background-color: #643BAB;
+    color : white;
+    cursor: pointer;
+}
+
+.comment-btn-area button:hover{
+    background-color: white;
+    color : #643BAB;
+    border: 2px solid #643BAB;
+}
+
+.update-textarea{
+	width: 100%;
+    height: 90px;
+    resize: none;
+}
+
+.comment-row{
+	border-top : 1px solid #ccc;
+	padding : 15px 0;
+}
+
+
+.child-comment{
+	padding-left : 50px;
+	position: relative;
+}
+
+/* 
+.child-comment:before {
+	content: "\f0a4";
+	font-family: "FontAwesome";
+	
+	position : absolute;
+	left : 0;
+	top : 35px;
+} */
+
+
+/* 답글 */
+.commentInsertContent{
+	width: 100%;
+    height: 90px;
+    resize: none;
+    margin-top : 20px;
+}
+
+/* 댓글 내용 */
+.comment-content{
+	white-space:pre-wrap; /* 작성된 문자열 모양 그대로(공백 유지)*/
+}

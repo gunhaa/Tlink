@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="threadMapper">
+
+	<resultMap type="ThreadChat" id="threadChat_rm">
+		<id property="chatNo" column="THREAD_CHATNO" />
+		<result property="threadNo" column="THREAD_NO" />
+		<result property="chatMessage" column="THREAD_MESSAGE" />
+		<result property="chatType" column="THREAD_TYPE" />
+		<result property="chatCreateDate" column="THREAD_TIMESTAMP" />
+		
+		<result property="memberNo" column="USER_NO" />
+		<result property="memberNickname" column="USER_NAME" />
+		<result property="memberProfile" column="PROFILE_IMG" />
+		
+		<collection property="fileList"
+					select="selectFileList"
+					column="THREAD_CHATNO"
+					javaType="java.util.ArrayList"
+					ofType="ThreadFile">
+		</collection>
+		
+	</resultMap>
+
+	<resultMap type="ThreadInfo" id="threadInfo_rm">
+		<id property="threadNo" column="THREAD_NO" />
+		<!-- <result property="projectNo" column="PROJECT_NO"/ -->
+		<result property="threadTitle" column="THREAD_TITLE" />
+
+		<!-- <collection property="userList" select="selectUserList" column="THREAD_NO" 
+			javaType="java.util.ArrayList" ofType="User"> </collection> -->
+	</resultMap>
+
+	<resultMap type="ThreadFile" id="threadFile_rm">
+		<id property="fileNo" column="FILE_NO" />
+		<result property="filePath" column="FILE_PATH" />
+		<result property="fileRename" column="FILE_RENAME" />
+		<result property="fileOriginName" column="FILE_ORIGINAL" />
+		<result property="fileOrder" column="FILE_ORDER" />
+		<result property="fileCode" column="FILE_CODE" />
+		<result property="targetNumber" column="TARGET_NO" />
+
+	</resultMap>
+	
+	<resultMap type="Crong" id="crong_rm">
+		<id property="memberNo" column="USER_NO"/>
+	</resultMap>
+	
+
+	<select id="selectThreadChat" resultMap="threadChat_rm">
+		SELECT THREAD_CHATNO, THREAD_NO, THREAD_MESSAGE, THREAD_TYPE,
+    		TO_CHAR(THREAD_TIMESTAMP, 'YYYY-MM-DD HH24:MI') THREAD_TIMESTAMP,
+    		USER_NO, USER_NAME, PROFILE_IMG
+		FROM "THREAD_MESSAGE"
+		JOIN "USER" USING(USER_NO)
+		WHERE THREAD_NO = #{threadNo}
+	</select>
+
+	<select id="selectFileList" resultMap="threadFile_rm">
+		SELECT * FROM FILES
+		WHERE TARGET_NO=#{targetNo}
+		AND FILE_CODE = 2
+	</select>
+
+	<select id="selectUser" resultType="map">
+		SELECT USER_NO, USER_EMAIL, USER_NAME, PROFILE_IMG
+		FROM "USER"
+		JOIN USER_PROJECT USING(USER_NO)
+		WHERE PROJECT_NO = #{projectNo}
+		AND USER_NO != #{userNo}
+		AND (USER_NAME LIKE '%${query}%' OR USER_EMAIL LIKE '%${query}%')
+	</select>
+
+	<select id="selectThread" resultMap="threadInfo_rm">
+		SELECT THREAD_NO, THREAD_TITLE
+		FROM THREAD
+		JOIN PROJECT_THREAD USING(THREAD_NO)
+		JOIN THREAD_MEMBER USING(THREAD_NO)
+		WHERE PROJECT_NO = #{projectNo}
+		AND USER_NO = #{userNo}
+		ORDER BY THREAD_NO DESC
+	</select>
+
+	<insert id="insertThread" >
+		<selectKey order="BEFORE" resultType="_int" keyProperty="threadNo">
+			SELECT SEQ_THREAD_NO.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO "THREAD" VALUES(#{threadNo}, #{threadTitle})
+	</insert>
+
+	<insert id="insertProjectThread">
+		INSERT INTO "PROJECT_THREAD" VALUES(#{projectNo}, #{threadNo})
+	</insert>
+	
+	<insert id="insertThreadMember">
+		INSERT INTO "THREAD_MEMBER" VALUES(#{threadNo}, #{userNo})
+	</insert>
+	
+	<insert id="insertChat">
+		<selectKey order="BEFORE" resultType="_int" keyProperty="chatNo">
+			SELECT SEQ_THREAD_CHAT_NO.NEXTVAL FROM DUAL 
+		</selectKey>
+		
+		INSERT INTO "THREAD_MESSAGE" VALUES(#{chatNo}, #{chatMessage}, SYSDATE, #{chatType}, #{threadNo} , #{memberNo})
+	</insert>
+	
+    <insert id="insertChatFile" parameterType="list">
+    	INSERT INTO FILES 
+	    	SELECT SEQ_FILE_NO.NEXTVAL, A.*
+	    		FROM(
+		        	<foreach collection="list" item="file" separator=" UNION ALL ">
+		             	SELECT #{file.filePath} FILE_PATH, 
+		                    #{file.fileRename} FILE_RENAME, 
+		                    #{file.fileOriginName} FILE_ORIGINAL,
+		                    ${file.fileOrder} FILE_ORDER, 
+		                    ${file.fileCode} FILE_CODE,
+		                    ${file.targetNumber} TARGET_NO
+		             	FROM DUAL
+		      		</foreach>
+	      		)A
+    </insert>
+
+	<select id="selectThreadLoppy" resultMap="crong_rm">
+		SELECT USER_NO FROM THREAD_MEMBER WHERE THREAD_NO=#{threadNo}
+	</select>
+	
+	<select id="selectThreadInfo" resultMap="threadInfo_rm">
+		SELECT THREAD_NO, THREAD_TITLE FROM THREAD WHERE THREAD_NO = #{threadNo}
+	</select>
+</mapper>

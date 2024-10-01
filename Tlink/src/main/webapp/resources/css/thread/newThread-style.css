@@ -1,0 +1,47 @@
+.createThread{
+    margin-left: 40px;
+}
+
+.createThread > :nth-child(1){
+    font-weight: bold;
+    font-size: 30px;
+    color: black;
+
+    margin-bottom: 0;
+}
+
+.createThread > :nth-child(2){
+    font-size: 20px;
+    color: #8d8d8d;
+
+    margin-top: 0;
+}
+
+.createThread > :nth-child(3){
+    width: 320px;
+    height: 80px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.createThread > :nth-child(3):hover{
+    background-color: #643BAB;
+    color: white;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

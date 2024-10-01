@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="workMapper">
+
+    <resultMap type="Work" id="work_rm">
+      <id     property="workNo" column="WORK_NO"/>
+      <result property="workTitle" column="WORK_TITLE"/>
+      <result property="workContent" column="WORK_CONTENT"/>
+      <result property="createDate" column="CREATE_DT"/>
+      <result property="updateDate" column="UPDATE_DT"/>
+      <result property="dueDate" column="DUE_DT"/>
+      <result property="workState" column="WORK_PR_ST"/>
+      <result property="workPriority" column="WORK_PR"/>
+      <result property="workManager" column="WORK_MN_NO"/>
+      <result property="parentNo" column="PARENT_NO"/>
+      <result property="projectNo" column="PROJECT_NO"/>
+      
+      <result property="workManagerName" column="USER_NAME"/>
+      <result property="profileImage" column="PROFILE_IMG"/>
+      <result property="projectName" column="PROJECT_TITLE"/>
+      <result property="parentName" column="PARENT_TITLE"/>
+   </resultMap>
+
+   
+<!-- 	<resultMap type="Comment" id="comment_rm">
+      <id property="commentNo" column="COMMENT_NO" />
+      <result property="commentContent" column="COMMENT_CON" />
+      <result property="commentDate" column="COMMENT_DT" />
+      <result property="parentNo" column="PARENT_NO" />
+      <result property="workNo" column="WORK_NO" />
+      <result property="userNo" column="USER_NO" />
+      <result property="projectNo" column="PROJECT_NO" />
+   </resultMap> -->
+
+
+    <resultMap type="User" id="user_rm">
+      <id     property="userNo" column="USER_NO"/>
+      <result property="userName" column="USER_NAME"/>
+   </resultMap>
+
+	
+	<select id="table" resultMap="work_rm">
+		SELECT A.WORK_NO, A.WORK_TITLE, A.WORK_CONTENT, 
+		TO_CHAR(A.CREATE_DT, 'YYYY-MM-DD') CREATE_DT, TO_CHAR(A.UPDATE_DT, 'YYYY-MM-DD') UPDATE_DT, TO_CHAR(A.DUE_DT, 'YYYY-MM-DD') DUE_DT, 
+		A.WORK_PR_ST, A.WORK_PR, A.WORK_MN_NO, A.PARENT_NO, A.PROJECT_NO
+		,USER_NAME, PROFILE_IMG
+		,PROJECT_TITLE
+		,B.WORK_TITLE PARENT_TITLE
+		FROM WORK A
+		LEFT OUTER JOIN "USER" ON A.WORK_MN_NO="USER".USER_NO
+		LEFT OUTER JOIN "PROJECT" ON A.PROJECT_NO="PROJECT".PROJECT_NO
+		LEFT OUTER JOIN WORK B ON A.PARENT_NO=B.WORK_NO
+		WHERE A.PROJECT_NO=#{projectNo}
+		AND A.WORK_ST=1
+		ORDER BY A.WORK_NO
+	</select>
+	
+	<select id="tableManagerList" resultMap="user_rm">
+		SELECT USER_NO, USER_NAME 
+		FROM USER_PROJECT
+		JOIN "USER" USING(USER_NO)
+		WHERE PROJECT_NO=#{projectNo}
+		AND USER_DEL_FL='N'
+	</select>
+	
+	<select id="tableParentList" resultMap="work_rm">
+		SELECT WORK_NO, WORK_TITLE 
+		FROM WORK
+		WHERE PROJECT_NO=#{projectNo}
+		AND WORK_ST=1
+	</select>
+	
+	
+	
+	
+	
+	
+	<select id="workSheet" resultMap="work_rm">
+		SELECT A.WORK_NO, A.WORK_TITLE, A.WORK_CONTENT, 
+		TO_CHAR(A.CREATE_DT, 'YYYY-MM-DD') CREATE_DT, TO_CHAR(A.UPDATE_DT, 'YYYY-MM-DD') UPDATE_DT, TO_CHAR(A.DUE_DT, 'YYYY-MM-DD') DUE_DT, 
+		A.WORK_PR_ST, A.WORK_PR, A.WORK_MN_NO, A.PARENT_NO, A.PROJECT_NO
+		,USER_NAME, PROFILE_IMG
+		,PROJECT_TITLE
+		,B.WORK_TITLE PARENT_TITLE
+		FROM WORK A
+		LEFT OUTER JOIN "USER" ON A.WORK_MN_NO="USER".USER_NO
+		LEFT OUTER JOIN "PROJECT" ON A.PROJECT_NO="PROJECT".PROJECT_NO
+		LEFT OUTER JOIN WORK B ON A.PARENT_NO=B.WORK_NO
+		WHERE A.PROJECT_NO=#{projectNo}
+		AND A.WORK_NO=#{workNo}
+		AND A.WORK_ST=1
+		ORDER BY A.WORK_NO
+	</select>
+	
+	
+	
+	
+	
+	
+	<select id="mywork" resultMap="work_rm">
+		SELECT A.WORK_NO, A.WORK_TITLE, A.WORK_CONTENT, 
+		TO_CHAR(A.CREATE_DT, 'YYYY-MM-DD') CREATE_DT, TO_CHAR(A.UPDATE_DT, 'YYYY-MM-DD') UPDATE_DT, TO_CHAR(A.DUE_DT, 'YYYY-MM-DD') DUE_DT, 
+		A.WORK_PR_ST, A.WORK_PR, A.WORK_MN_NO, A.PARENT_NO, A.PROJECT_NO
+		,USER_NAME, PROFILE_IMG
+		,PROJECT_TITLE
+		,B.WORK_TITLE PARENT_TITLE
+		FROM WORK A
+		LEFT OUTER JOIN "USER" ON A.WORK_MN_NO="USER".USER_NO
+		LEFT OUTER JOIN "PROJECT" ON A.PROJECT_NO="PROJECT".PROJECT_NO
+		LEFT OUTER JOIN WORK B ON A.PARENT_NO=B.WORK_NO
+		WHERE A.PROJECT_NO=#{projectNo}
+        AND A.WORK_MN_NO=#{userNo}
+		AND A.WORK_ST=1
+		ORDER BY A.WORK_NO
+	</select>
+	
+	
+
+	
+	
+</mapper>
+
+

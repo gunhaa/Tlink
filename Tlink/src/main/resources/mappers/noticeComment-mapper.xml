@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="noticeCommentMapper">
+
+	<!-- 댓글 작성 -->
+	<insert id="insert">
+		INSERT INTO NOTICE_COMMENT 
+     	VALUES(SEQ_COMMENT_NO.NEXTVAL, 
+           #{commentContent},
+           DEFAULT, DEFAULT,
+           #{noticeNo},
+           #{userNo},
+           
+           <!-- 동적 sql : if문(부모 댓글인지 자식 댓글 인지 파악) -->
+           <if test="parentNo == 0">NULL</if>           
+           <if test="parentNo != 0">#{parentNo}</if>
+           )
+	</insert>
+	
+	<update id="update">
+		UPDATE NOTICE_COMMENT SET
+		COMMENT_CONTENT = #{commentContent}
+		WHERE COMMENT_NO = #{commentNo}
+	</update>
+	
+	<update id="delete">
+		UPDATE NOTICE_COMMENT SET
+		COMMENT_DEL_FL = 2
+		WHERE COMMENT_NO = #{commentNo}
+	</update>
+
+	<update id="updateFix">
+		UPDATE NOTICE_COMMENT SET
+		COMMENT_DEL_FL = 3
+		WHERE COMMENT_NO = #{commentNo}
+	</update>
+	
+	<update id="updateDisableFix">
+		UPDATE NOTICE_COMMENT SET
+		COMMENT_DEL_FL = 1
+		WHERE COMMENT_NO = #{commentNo}
+	</update>
+
+</mapper>

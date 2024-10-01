@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="videoMapper">
+
+   <resultMap type="Chat" id="chat_rm">
+   
+      <id property="chatNo" column="CHAT_NO"/>
+      
+      <result property="chatTimestamp" column="CHAT_TIMESTAMP"/>
+      <result property="chatContent" column="CHAT_CONTENT"/>
+      <result property="chatProjectNo" column="PROJECT_NO"/>
+      <result property="chatMemberNo" column="USER_NO"/>
+      <result property="chatUserName" column="USER_NAME"/>
+		<result property="chatProfileImg" column="PROFILE_IMG"/>
+
+   </resultMap>
+	
+   <!-- 방 만들기 -->
+	<insert id="makeRoom">
+		INSERT INTO "VIDEO_MEMBER" VALUES (#{projectNo}, #{memberNo}, 'Y')
+	</insert>
+
+	<!-- 방 제목 변경 -->
+	<update id="changeRoomName">
+		UPDATE VIDEO_ROOM SET VIDEO_TITLE=#{title} WHERE PROJECT_NO=#{projectNo}
+	</update>
+	
+ 	<select id="selectTitle" resultType="String">
+		SELECT VIDEO_TITLE FROM VIDEO_ROOM WHERE PROJECT_NO=#{projectNo}
+	</select>
+	
+	<update id="changeStatusY">
+		UPDATE VIDEO_MEMBER SET VIDEO_STATUS='Y' WHERE PROJECT_NO=#{projectNo} AND USER_NO=#{memberNo}
+	</update>
+	
+	<update id="changeStatusN">
+		UPDATE VIDEO_MEMBER SET VIDEO_STATUS='N' WHERE PROJECT_NO=#{projectNo} AND USER_NO=#{memberNo}
+	</update>
+	
+	<insert id="chatSend">
+		INSERT INTO VIDEO_CHAT VALUES (SEQ_CHAT_NO.NEXTVAL, SYSDATE, #{chatContent}, #{projectNo} , #{memberNo})
+	</insert>
+	
+	<select id="selectChat" resultMap="chat_rm">
+		SELECT USER_NAME, CHAT_CONTENT, CHAT_TIMESTAMP, PROFILE_IMG FROM VIDEO_CHAT JOIN "USER" USING(USER_NO) WHERE PROJECT_NO=#{projectNo} ORDER BY CHAT_NO
+	</select>
+	
+	<insert id="insertBookedChat">
+		INSERT INTO VIDEO_CHATTIMER VALUES (SEQ_TIMER_NO.NEXTVAL , SYSDATE, #{chatContent}, 'N' , #{projectNo}, #{memberNo})
+	</insert>
+	
+	<update id="updateBookedChatStatusY">
+		UPDATE VIDEO_CHATTIMER SET TIMER_STATUS='Y' WHERE PROJECT_NO=#{projectNo} AND USER_NO=#{memberNo} AND TIMER_NO=#{seq}
+	</update>
+	
+	<select id="whatIsMyName" resultType="String">
+		SELECT USER_NAME FROM VIDEO_MEMBER JOIN "USER" USING(USER_NO) WHERE USER_NO=#{memberNo}
+	</select>
+	
+	<select id="selectNowBookedChatSeq" resultType="int">
+		SELECT SEQ_TIMER_NO.CURRVAL FROM DUAL
+	</select>
+	
+</mapper>
