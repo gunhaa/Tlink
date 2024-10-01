@@ -37,9 +37,6 @@ canvas.addEventListener('mouseup', async () => {
             arrXY.length = 0;
         }
 
-        // console.log(getDrawDataAsJson());
-
-
     }
 });
 
@@ -50,7 +47,6 @@ canvas.addEventListener('mousemove', (e) => {
 
         arrXY.push({ x, y });
 
-        // drawData.push({ drawtype: 'draw', x, y });
         ctx.lineTo(x, y);
         ctx.strokeStyle = currentColor;
         ctx.stroke();
@@ -104,20 +100,11 @@ const projectDrawStatus = () => {
     })
         .then(resp => resp.text())
         .then(data => {
-            // console.log("Raw : ", data);
-            // console.log("Raw Type : ", typeof data);
             if (data) {  // data가 null이거나 빈 문자열이 아닐 때만 처리
                 try {
                     let result = JSON.parse(data);
                     console.log("fetch 결과", result);
                     console.log("result 타입:", typeof result);
-
-                    // let result2 = JSON.parse(result);
-
-                    // console.log("fetch 결과2", result2);
-                    // console.log("result 타입2:", typeof result2);
-
-
 
                     // result가 null이거나 유효한 데이터일 때만 drawFromData 호출
                     if (result !== null) {
@@ -158,28 +145,10 @@ window.addEventListener("DOMContentLoaded", (e) => {
 
 })
 
-// document.querySelector("#penBtn")!.addEventListener("click", e=>{
-//     let inputColor = document.querySelector<HTMLInputElement>(".btn2")!.value ;
-//     currentColor = inputColor;
-// });
-
 document.querySelector(".btn2")!.addEventListener("change", e => {
     let inputColor = document.querySelector<HTMLInputElement>(".btn2")!.value;
     currentColor = inputColor;
 });
-
-
-// document.querySelector("#blackPen")!.addEventListener("click", e=>{
-//     currentColor = "#000000";
-// });
-
-// document.querySelector("#bluePen")!.addEventListener("click", e=>{
-//     currentColor = "#0000FF";
-// });
-
-// document.querySelector("#redPen")!.addEventListener("click", e=>{
-//     currentColor = "#FF0000";
-// });
 
 document.querySelector("#erase")!.addEventListener("click", e => {
     console.log("전송되는 projectNo : ", whiteProjectNo);

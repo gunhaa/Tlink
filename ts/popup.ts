@@ -68,7 +68,6 @@ const inputTitleModal = (title: string, placeHolder: string) => {
 
         if (confirmButton) {
             confirmButton.addEventListener("click", () => {
-                // fetch를 통한 업데이트 구문 추가
                 const nowtitle = document.querySelector<HTMLDivElement>("#title-container")!;
                 const input = document.querySelector<HTMLInputElement>("#content-box-item2");
 
@@ -85,7 +84,6 @@ const inputTitleModal = (title: string, placeHolder: string) => {
                     .then(resp => resp.json())
                     .then(data => {
 
-                        // console.log(data);
 
                         if (data > 0) {
                             nowtitle.innerHTML = `<b>${input!.value}</b>`
@@ -102,7 +100,6 @@ const inputTitleModal = (title: string, placeHolder: string) => {
                             }))
 
                         } else {
-                            // alert("주제 변경 실패");
                             alert$2(main, "red", "white", "변경을 실패 하였습니다.", "2s", 2000);
                         }
 
@@ -147,12 +144,9 @@ const inputBookedModal = (title: string, placeHolder: string) => {
 
         if (confirmButton) {
             confirmButton.addEventListener("click", () => {
-                // fetch를 통한 업데이트 구문 추가
                 const bookedInput = document.querySelector<HTMLInputElement>(".datetime");
                 const msgInput = document.querySelector<HTMLInputElement>("#content-box-item2");
 
-                // console.log(bookedInput!.value);
-                // console.log(msgInput!.value);
                 socket.send(JSON.stringify({
                     "type": "booked",
                     "bookedMsg": msgInput!.value,
@@ -184,8 +178,7 @@ const inputBookedModal = (title: string, placeHolder: string) => {
 }
 
 
-// 웹소켓 코드
-
+// 웹소켓
 let socket: {
     close: any;
     readyState: number; onopen: (e: MessageEvent) => void; onmessage: (e: MessageEvent) => Promise<void>; onclose: (e: MessageEvent) => void; send: (arg0: string) => void;
@@ -216,7 +209,6 @@ const connectWebsocket = () => {
 
         socket.onmessage = async (e: MessageEvent) => {
 
-            //console.log("받은거" + e);
 
             const parsedMessage = await JSON.parse(e.data);
 
@@ -239,23 +231,21 @@ const connectWebsocket = () => {
 
             // 상대방에게서 실행되는 코드
             if (parsedMessage.type === "offer") {
-                //console.log("parsedMessage.makeAnswerMemberNo : 보내는 곳이 이곳임 : ", parsedMessage.makeAnswerMemberNo);
-                // console.log("parsedMessage.type", parsedMessage.type);
-                // console.log("parsedMessage.sdp", parsedMessage.sdp);
+
+                // map 세팅
 
                 peerConnectionMap.set(parsedMessage.makeAnswerMemberNo, createConnection(parsedMessage.makeAnswerMemberNo));
 
                 peerConnectionMap.get(parsedMessage.makeAnswerMemberNo).setRemoteDescription(new RTCSessionDescription({ type: parsedMessage.type, sdp: parsedMessage.sdp }));
 
-                // map 세팅완료
-                // answer 보내야함
+
+                // answer 보내기
 
                 sendAnswer(peerConnectionMap.get(parsedMessage.makeAnswerMemberNo), parsedMessage.makeAnswerMemberNo);
             }
 
             if (parsedMessage.type === "answer") {
                 peerConnectionMap.get(parsedMessage.setAnswerMemberNo).setRemoteDescription(new RTCSessionDescription({ type: parsedMessage.type, sdp: parsedMessage.sdp }));
-                // console.log("answer응답 받았음, map에 원격 세팅중", parsedMessage.setAnswerMemberNo);
             }
 
             if (parsedMessage.type === "icecandidate") {
@@ -265,14 +255,10 @@ const connectWebsocket = () => {
             }
 
             if (parsedMessage.type === "chat") {
-                console.log("chat 실행됬음", parsedMessage);
-                // chatsend 부분이랑 이곳을 name으로 바꿔야함
-                console.log("profileImg : ", parsedMessage.profileImg)
                 if (parsedMessage.profileImg === "" || parsedMessage.profileImg === null) {
                     parsedMessage.profileImg = "/resources/images/common/user.png";
                 }
                 const content = makeChatBlock(parsedMessage.memberName, parsedMessage.chatContent, parsedMessage.now, parsedMessage.profileImg);
-                console.log("변화 체크용4");
                 const tempDiv = document.createElement('div');
                 tempDiv.innerHTML = content;
 
@@ -284,7 +270,6 @@ const connectWebsocket = () => {
             }
 
             if (parsedMessage.type === "whiteBoard") {
-                console.log("board 실행됬고 내용은 : ", parsedMessage[projectNo]);
                 if (whiteBoard) {
 
                     whiteBoard.postMessage(parsedMessage[projectNo], "*");
@@ -310,7 +295,6 @@ const connectWebsocket = () => {
 
                 videoSizeHandler();
 
-                console.log("제거 완료");
             }
 
 
@@ -320,8 +304,7 @@ const connectWebsocket = () => {
 
         socket.onclose = (e: MessageEvent) => {
             reject();
-            console.log(e);
-            console.log("websocket 끊겼음");
+            console.log("websocket 끊김");
         }
     })
 
@@ -347,7 +330,6 @@ const getMedia = async () => {
         // extractAudio(myStream);
 
 
-
         let video = document.querySelectorAll("video")[0];
 
 
@@ -362,7 +344,7 @@ const getMedia = async () => {
 
 
             otherMemberNoSet.forEach((otherMemberNo) => {
-                // console.log("재협상중");
+                console.log("재협상중");
                 const videoTrack = myStream.getVideoTracks()[0];
                 const sender = peerConnectionMap.get(otherMemberNo).getSenders().find((s: any) => s.track.kind === 'video');
                 sender.replaceTrack(videoTrack);
@@ -536,7 +518,6 @@ const option1btn = () => {
         option1.innerText = "카메라(사용중)";
         option2.innerText = "화면공유";
         state = "camera";
-        /* 추가부분 */
         const screenTrack = myStream.getTracks()[0];
         // 화면 공유 종료
         screenTrack.stop();
@@ -827,14 +808,7 @@ const makeChatBlock = (chatName: any, chatContent: any, now: any, profileImg: an
                 <div class="chat-content">${chatContent}</div>
             </div>
         </div>`
-    // return `<div class="chat-block">
-    //     <span class="today">@${now}</span>
-    //     <div class="chat-item">
-    //         <img src="/resources/images/loofy1.jpg" class="chat-prof-img">
-    //         <div class="chat-id">${chatName}</div>
-    //         <div class="chat-content">${chatContent}</div>
-    //     </div>
-    // </div>`
+
 }
 
 const videoSizeHandler = () => {
@@ -883,13 +857,13 @@ const videoSizeHandler = () => {
     }
 }
 
+
+// AudioStream 추출 - 미완성
 const extractAudio = (myStream: MediaStream) => {
 
-    // WebRTC로 스트림 처리
     const audioTracks = myStream.getAudioTracks();
     console.log('WebRTC 오디오 트랙:', audioTracks);
 
-    // 2. Speech Recognition API 사용
     const recognition = new ((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition)();
     recognition.lang = 'ko-KR';  // 한국어 설정
     recognition.interimResults = true;  // 중간 결과 포함
@@ -911,7 +885,6 @@ const extractAudio = (myStream: MediaStream) => {
         console.log('음성 인식 종료');
     };
 
-    // 3. 음성 인식 시작
     recognition.start();
 
 
@@ -921,15 +894,7 @@ const extractAudio = (myStream: MediaStream) => {
 const openBoard = () => {
 
     whiteBoard = window.open(`${req}/resources/popup/whiteBoard.jsp?memberNo=${memberNo}&projectNo=${projectNo}`, "whiteBoard", "width=600,height=750");
-    // window.addEventListener('message', (e) => {
 
-    //     socket.send(JSON.stringify({
-    //         "type": "whiteBoard",
-    //         "draw": e.data,
-    //         "projectNo": projectNo,
-    //         "memberNo": memberNo
-    //     }))
-    // });
 
 }
 
@@ -1068,8 +1033,6 @@ chatInput.addEventListener("keydown", pushEnter);
 
 window.addEventListener('message', (e) => {
 
-    // profileImg = "/resources/images/common/user";
-
     // whiteBoard 창에서 보내는 메시지만 처리
     if (e.source === whiteBoard) {
         console.log('Received message from whiteBoard:', e.data);
@@ -1090,4 +1053,3 @@ window.addEventListener('message', (e) => {
 });
 
 startVideoConference();
-// 수정 projectNo4

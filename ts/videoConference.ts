@@ -1,5 +1,4 @@
 declare const req: any;
-//declare const memberNo: any;
 
 
 const input = document.querySelector<HTMLInputElement>("#memberNo")!;
@@ -86,32 +85,6 @@ const makeChatBlock1 = (chatNo: any, chatContent: any, chatTimestamp : any, chat
 if (btn2) {
     btn2.addEventListener("click", e => {
 
-
-        /*
-        추가 시켜야 할 태그
-            <style>
-            @keyframes fadeInDown {
-            0% {
-                opacity: 0;
-                transform: translate3d(0, -100%, 0);
-            }
-            100% {
-                opacity: 1;
-                transform: translateZ(0);
-            }
-            }
-
-            @keyframes fadeOut {
-            0% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-            }
-            }
-            </style>
-        
-        */
         const main = document.querySelector("main")!;
         //body // modal색 // 글씨색 // 텍스트 // 지속 시간
         alert$1(main, "green", "white", "성공 하였습니다.", "2s", 2000);
