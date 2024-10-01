@@ -56,7 +56,6 @@ public class VideoConference extends TextWebSocketHandler {
 	// 프로젝트 번호 + whiteBoard json 저장용 map
 	@Autowired
 	private Map<String, String> whiteBoardMap;
-//	private Map<String, String> whiteBoardMap = new ConcurrentHashMap<String, String>();
 	
 
 	@Override
@@ -66,12 +65,10 @@ public class VideoConference extends TextWebSocketHandler {
 
 	}
 
-	// handlerTextMessage - 클라이언트로부터 텍스트 메세지를 받았을때 실행
 	@Override
 	protected synchronized void handleTextMessage(final WebSocketSession session, final TextMessage message)
 			throws Exception {
 
-		// 전달받은 내용은 JSON 형태의 String
 		logger.info("전달받은 내용 : " + message.getPayload());
 
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -122,6 +119,8 @@ public class VideoConference extends TextWebSocketHandler {
 			
 			Util.broadCasting(project,jsonMsg);
 			
+			return;
+			
 		}
 
 		if (obj.getType().equals(MSG_TYPE_MEMBERNO)) {
@@ -135,7 +134,7 @@ public class VideoConference extends TextWebSocketHandler {
 
 			Util.broadCasting(project,jsonMsg);
 			
-
+			return;
 		}
 
 		if (obj.getType().equals(MSG_TYPE_OFFER)) {
@@ -151,7 +150,7 @@ public class VideoConference extends TextWebSocketHandler {
 			logger.info("offer가 보낸 targetNo : {}" , obj.getTargetNo());
 			WebSocketSession ses = project.get(obj.getTargetNo());
 			ses.sendMessage(new TextMessage(jsonMsg));
-
+			return;
 		}
 
 		if (obj.getType().equals(MSG_TYPE_ANSWER)) {
@@ -167,7 +166,7 @@ public class VideoConference extends TextWebSocketHandler {
 			logger.info("answer가 보낸 targetNo : {} " , obj.getTargetNo());
 			WebSocketSession ses = project.get(obj.getTargetNo());
 			ses.sendMessage(new TextMessage(jsonMsg));
-
+			return;
 		}
 
 		if (obj.getType().equals(MSG_TYPE_ICECANDIDATE)) {
@@ -186,7 +185,7 @@ public class VideoConference extends TextWebSocketHandler {
 
 			WebSocketSession ses = project.get(obj.getTargetNo());
 			ses.sendMessage(new TextMessage(jsonMsg));
-
+			return;
 		}
 
 		if (obj.getType().equals(MSG_TYPE_BOOKED)) {
@@ -206,7 +205,6 @@ public class VideoConference extends TextWebSocketHandler {
 
 			msg.put("memberName", obj.getMemberName());
 			msg.put("profileImg", obj.getProfileImg());
-//			String jsonMsg = objectMapper.writeValueAsString(msg);
 			
 			schduling.scheduleMessage(msg, localDateTime , project , obj.getProjectNo(), obj.getMemberNo(), obj.getBookedMsg());
 
@@ -220,7 +218,7 @@ public class VideoConference extends TextWebSocketHandler {
 			} else {
 				logger.info("예약 메시지 db 삽입 실패");
 			}
-			
+			return;
 		}
 
 		if (obj.getType().equals(MSG_TYPE_CHAT)) {
@@ -251,19 +249,13 @@ public class VideoConference extends TextWebSocketHandler {
 			} else {
 				logger.info("chat db저장 실패");			
 			}
+			return;
 			
 		}
 		
 		if(obj.getType().equals(MSG_TYPE_WHITEBOARD)) {
 			logger.info("whiteBoard 실행");
 			logger.info("보내는 내용 : {}" , obj.getDraw());
-//			String draw = whiteBoardMap.get(obj.getProjectNo());
-//			if(draw == null) {
-//				draw = "";
-//			}
-//			draw += obj.getDraw();
-			// 전역 변수 whiteboardmap에 정보를 누적시킨다.
-//	        whiteBoardMap.put(obj.getProjectNo(), draw);
 			
 			appendDrawData(obj.getProjectNo(), obj.getDraw());
 			
@@ -278,7 +270,7 @@ public class VideoConference extends TextWebSocketHandler {
 			String jsonMsg = objectMapper.writeValueAsString(msg);
 	        logger.info("jsonMsg : {} ", jsonMsg);
 			Util.broadCasting(project,jsonMsg);
-	        
+			return;
 		}
 		
 		if (obj.getType().equals(MSG_TYPE_TITLE)) {
@@ -294,12 +286,11 @@ public class VideoConference extends TextWebSocketHandler {
 			String jsonMsg = objectMapper.writeValueAsString(msg);
 			
 			Util.broadCasting(project,jsonMsg);
-
+			return;
 		}
 
 	}
 
-	// afterConnectionClosed - 클라이언트와 연결이 종료되면 실행된다.
 	@Override
 	public synchronized void afterConnectionClosed(final WebSocketSession session, final CloseStatus status) throws Exception {
 

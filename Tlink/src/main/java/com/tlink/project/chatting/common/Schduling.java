@@ -50,13 +50,7 @@ public class Schduling {
         	int seq = service.selectNowBookedChatSeq();
         	logger.info("seq : {}" , seq);
         	
-//			Map<String, Object> boradCasting = new HashMap<>();
 
-//			boradCasting.put("type", MSG_TYPE_CHAT);
-//			boradCasting.put("chatContent", msgMap.get("chatContent"));
-//			boradCasting.put("memberNo", msgMap.get("memberNo"));
-//			boradCasting.put("memberName", obj.getMemberName());
-//			boradCasting.put("profileImg", obj.getProfileImg());
 	        LocalDateTime currentTime = LocalDateTime.now();
 	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 	        String formattedTime = currentTime.format(formatter);
