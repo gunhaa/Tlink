@@ -6,10 +6,10 @@
 
 
 <c:forEach var="project" items="${projectList}">
-  <c:if test="${project.projectNo==projectNo}">
-     <c:set var="projectTitle" value="${project.projectTitle}"/>
-     <c:set var="manager" value="${project.manager}"></c:set>
-  </c:if>
+	<c:if test="${project.projectNo==projectNo}">
+		<c:set var="projectTitle" value="${project.projectTitle}" />
+		<c:set var="manager" value="${project.manager}"></c:set>
+	</c:if>
 </c:forEach>
 
 
@@ -18,148 +18,211 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>workspace</title>
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    
-    <link rel="stylesheet" href="/resources/css/thread/threadUtil-style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>workspace</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+<link rel="stylesheet" href="/resources/css/thread/threadUtil-style.css">
 
 
 </head>
 
 <body>
-    <jsp:include page="/WEB-INF/views/thread/createModal.jsp"/>
-    
-    <aside class="aside">
-        <div class="asideTop">
-            <ul>
-                <li>
-                    <div>
+	<jsp:include page="/WEB-INF/views/thread/createModal.jsp" />
 
-                        <c:if test="${loginUser.profileImg==null}">
-                            <a href="#"><img src="/resources/images/common/user.png"/></a>
-                        </c:if>
-                        <c:if test="${loginUser.profileImg!=null}">
-                            <a href="#"><img src="${loginUser.profileImg}"/></a>
-                        </c:if>
-                    </div>
-                </li>
-                <li>
-					<p style="font-size:24px; font-weight:400; margin-left:15px;">${projectTitle}</p>
-                </li>
-            </ul>
-        </div>
-        <div id="aside">
-            <div class="sort"
-                style="width: 70px; display: flex; justify-content: space-between; flex-direction: column;">
-                <div>
-                    <ul style="list-style-type: none; padding: 0 0 0 0px; text-align: center; margin: 0;">
-                        <li><a href="#tab1"><span class="material-symbols-outlined"
-                                    style="font-size: 30px;">home</span></a></li>
-                        <li><a href="#tab2">
+	<aside class="aside">
+		<div class="asideTop">
+			<ul>
+				<li>
+					<div>
+
+						<c:if test="${loginUser.profileImg==null}">
+							<a href="#"><img src="/resources/images/common/user.png" /></a>
+						</c:if>
+						<c:if test="${loginUser.profileImg!=null}">
+							<a href="#"><img src="${loginUser.profileImg}" /></a>
+						</c:if>
+					</div>
+				</li>
+				<li>
+					<p style="font-size: 24px; font-weight: 400; margin-left: 15px;">${projectTitle}</p>
+				</li>
+			</ul>
+		</div>
+		<div id="aside">
+			<div class="sort" style="width: 70px; display: flex; justify-content: space-between; flex-direction: column;">
+				<div>
+					<ul style="list-style-type: none; padding: 0 0 0 0px; text-align: center; margin: 0;">
+						<li><a href="#tab1"><span class="material-symbols-outlined" style="font-size: 30px;">home</span></a></li>
+						<li><a href="#tab2"> <span class="material-symbols-outlined" style="font-size: 30px;">sms</span></a></li>
+						<li><a href="#tab3"><span class="material-symbols-outlined" style="font-size: 30px;">info</span></a></li>
+					</ul>
+				</div>
+				<div>
+					<ul style="list-style-type: none; padding: 0; text-align: center; margin: 0;">
+						<li><a href="/myPage/project"><span class="material-symbols-outlined" style="transform: rotate(180deg); font-size: 30px;">logout</span></a></li>
+					</ul>
+				</div>
+			</div>
+			<div id="tab1">
+				<ul>
+					<li><a href="/workList/gantChart?projectNo=${projectNo}" style="font-weight: 400;">워크스페이스</a></li>
+					<li><a href="/todoList?projectNo=${projectNo}" style="font-weight: 400;">해야할 일</a></li>
+					<li><a href="/calendar?projectNo=${projectNo}" style="font-weight: 400;">캘린더</a></li>
+					<li><span id="btn_videoConference" style="color: white; cursor: pointer; font-size: 18px; font-weight: 300;">화상회의</span></li>
+				</ul>
+			</div>
+			<div id="tab2">
+				<ul style="">
+					<c:forEach var="thread" items="${threadInfo}">
+						<li><a href="/thread/thread?threadNo=${thread.threadNo}&projectNo=${projectNo}">${thread.threadTitle}</a></li>
+					</c:forEach>
+				</ul>
+				<button id="createThread">
+					<span class="material-symbols-outlined">add</span>
+				</button>
+			</div>
+			<div id="tab3">
+				<ul style="">
+					<li><a href="/project/member?projectNo=${projectNo}">멤버관리</a></li>
+					<li><a href="/project/secession?projectNo=${projectNo}">프로젝트 탈퇴</a></li>
+					<c:if test="${loginUser.userNo == manager}">
+						<li><a href="/project/delete?projectNo=${projectNo}">프로젝트 삭제</a></li>
+					</c:if>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+			</div>
+		</div>
+	</aside>
 
 
-                        <span class="material-symbols-outlined"
-                                    style="font-size: 30px;">sms</span></a></li>
-                        <li><a href="#tab3"><span class="material-symbols-outlined"
-                                    style="font-size: 30px;">info</span></a></li>
-                    </ul>
-                </div>
-                <div>
-                    <ul style="list-style-type: none; padding: 0; text-align: center; margin: 0;">
-                            <li><a href="/myPage/project"><span class="material-symbols-outlined"
-                                        style="transform: rotate(180deg); font-size: 30px;">logout</span></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div id="tab1">
-                <ul>
-                    <li><a href="/workList/gantChart?projectNo=${projectNo}" style="font-weight:400;">워크스페이스</a></li>
-                    <li><a href="/todoList?projectNo=${projectNo}" style="font-weight:400;">해야할 일</a></li>
-                    <li><a href="/calendar?projectNo=${projectNo}" style="font-weight:400;">캘린더</a></li>
-                    <li><span id="btn_videoConference" style="color:white; cursor:pointer; font-size:18px; font-weight:300;">화상회의</span></li>
-                </ul>
-            </div>
-            <div id="tab2">
-                <ul style="">
-                    <c:forEach var="thread" items="${threadInfo}">
-                        <li><a href="/thread/thread?threadNo=${thread.threadNo}&projectNo=${projectNo}">${thread.threadTitle}</a></li>
-                    </c:forEach>
-                </ul>
-                <button id="createThread"><span class="material-symbols-outlined">add</span></button>
-            </div>
-            <div id="tab3">
-                <ul style="">
-                    <li><a href="/project/member?projectNo=${projectNo}">멤버관리</a></li>
-                    <li><a href="/project/secession?projectNo=${projectNo}">프로젝트 탈퇴</a></li>
-                    <c:if test="${loginUser.userNo == manager}">
-                        <li><a href="/project/delete?projectNo=${projectNo}">프로젝트 삭제</a></li>
-                    </c:if>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
-            </div>
-        </div>
-    </aside>
-
-    
 
 
 </body>
 
-    <c:if test="${!empty message}">
-        
-        <script>
+<c:if test="${!empty message}">
+
+	<script>
             // EL/JSTL 구문이 먼저 해석되는데
             // 문자열의 경우 따옴표가 없는 상태이니 붙여줘야한다!!!
             alert('${message}');
             
         </script>
 
-    </c:if>
+</c:if>
 
 </html>
 
 <style>
+@font-face {
+	font-family: 'Noto Sans KR';
+	font-style: normal;
+	font-weight: 100;
+	src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff2)
+		format('woff2'),
+		url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff)
+		format('woff'),
+		url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.otf)
+		format('opentype');
+}
 
-	@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 100;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.otf) format('opentype');}
-@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 300;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.otf) format('opentype');}
-@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 400;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.otf) format('opentype');}
-@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 500;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.otf) format('opentype');}
-@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 700;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.otf) format('opentype');}
-@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 900;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.otf) format('opentype');}
+@font-face {
+	font-family: 'Noto Sans KR';
+	font-style: normal;
+	font-weight: 300;
+	src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff2)
+		format('woff2'),
+		url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff)
+		format('woff'),
+		url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.otf)
+		format('opentype');
+}
+
+@font-face {
+	font-family: 'Noto Sans KR';
+	font-style: normal;
+	font-weight: 400;
+	src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff2)
+		format('woff2'),
+		url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff)
+		format('woff'),
+		url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.otf)
+		format('opentype');
+}
+
+@font-face {
+	font-family: 'Noto Sans KR';
+	font-style: normal;
+	font-weight: 500;
+	src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff2)
+		format('woff2'),
+		url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff)
+		format('woff'),
+		url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.otf)
+		format('opentype');
+}
+
+@font-face {
+	font-family: 'Noto Sans KR';
+	font-style: normal;
+	font-weight: 700;
+	src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff2)
+		format('woff2'),
+		url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff)
+		format('woff'),
+		url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.otf)
+		format('opentype');
+}
+
+@font-face {
+	font-family: 'Noto Sans KR';
+	font-style: normal;
+	font-weight: 900;
+	src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff2)
+		format('woff2'),
+		url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff)
+		format('woff'),
+		url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.otf)
+		format('opentype');
+}
 
 * {
-    font-family: 'Noto Sans KR', sans-serif;
+	font-family: 'Noto Sans KR', sans-serif;
 }
-	
-    * { box-sizing: border-box; }
-    body{ margin: 0; }
-    .aside {
-        list-style: none;
-        width: 350px;
-    }
 
-    .aside ul{
-        margin: 0;
-        padding: 0;
-    }
-    .asideTop div{
-        overflow: hidden;
-    }
+* {
+	box-sizing: border-box;
+}
 
-    .asideTop img{
-        width: auto;
-        height: 70px;
-    }
+body {
+	margin: 0;
+}
 
+.aside {
+	list-style: none;
+	width: 350px;
+}
+
+.aside ul {
+	margin: 0;
+	padding: 0;
+}
+
+.asideTop div {
+	overflow: hidden;
+}
+
+.asideTop img {
+	width: auto;
+	height: 70px;
+}
 </style>
 
 <script src="/resources/js/thread/newThread-modal.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.min.js" integrity="sha256-Fb0zP4jE3JHqu+IBB9YktLcSjI1Zc6J2b6gTjB0LpoM=" crossorigin="anonymous"></script>
 <script>
@@ -295,12 +358,6 @@
         + cen()
     );
 
-
-
-
-</script>
-
-<script>
 const btn = document.querySelector("#btn_videoConference");
 const profileImg_1 = "${loginUser.profileImg}";
 const memberNo_1 = "${loginUser.userNo}";
@@ -390,12 +447,5 @@ const makeChatBlock = (chatUserName, chatContent, chatTimestamp, chatProfileImg)
             </div>
         </div>`
 }
-
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
-<script>
-
-   
-
 
 </script>

@@ -1012,7 +1012,7 @@ const startVideoConference = async () => {
 
         });
 
-    }, 5000);
+    }, 2000);
 
     // ** await을 하면 이벤트가 끝나기전에 실행되버린다**
     // await limitAndNegotiation();
