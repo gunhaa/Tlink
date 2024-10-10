@@ -15,7 +15,7 @@
 ### 3. 공유 화이트보드
 ![화상회의3](https://github.com/user-attachments/assets/5d3ffa61-4bef-4ddc-a813-0db8143b7dde)
 
-## 화상회의 테스트 방법
+## 빠르게 화상회의 테스트 방법
 
 1. SQL 폴더에서 01_sys로 계정 생성
 2. SQL 폴더에서 02_create로 테이블 생성
@@ -29,4 +29,4 @@
 - memberNo 4 , projectNo 1 , nickname 유저이
 - memberNo 5 , projectNo 1 , nickname 유저삼
 - memberNo 6 , projectNo 1 , nickname 유저사
-로 테스트가 가능하다.
+로 테스트가 가능하다. (연결 지연시간이 컴퓨터 성능에 따라 훨씬 빨라질수 있지만, 안정적인 테스트를 위해서 3초로 설정)
