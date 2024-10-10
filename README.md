@@ -29,4 +29,8 @@
 - memberNo 4 , projectNo 1 , nickname 유저이
 - memberNo 5 , projectNo 1 , nickname 유저삼
 - memberNo 6 , projectNo 1 , nickname 유저사
-로 테스트가 가능하다. (연결 지연시간이 컴퓨터 성능에 따라 훨씬 빨라질수 있지만, 안정적인 테스트를 위해서 3초로 설정)
+
+로 테스트가 가능합니다.
+(연결 지연시간이 컴퓨터 성능에 따라 훨씬 빨라질수 있지만, 안정적인 테스트를 위해서 3초로 설정)
+
+6. 화상회의 Typescript코드는 videoConference TS폴더에 있습니다.
