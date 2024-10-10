@@ -6,7 +6,7 @@
 
 - 담당 부분만 : [클릭](https://www.canva.com/design/DAGSTp_mnRI/DppkDOzbChvEuKzoApsyqA/view?utm_content=DAGSTp_mnRI&utm_campaign=designshare&utm_medium=link&utm_source=editor)
 
-## 미리보기
+## 담당 부분 미리보기
 
 ### 1. 화상회의
 ![화상회의1](https://github.com/user-attachments/assets/6377c4b9-45cc-4d6c-97da-ffdcee913a34)
