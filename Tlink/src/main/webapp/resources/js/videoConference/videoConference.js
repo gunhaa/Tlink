@@ -2,6 +2,7 @@
 //declare const memberNo: any;
 const input = document.querySelector("#memberNo");
 const input2 = document.querySelector("#roomNo");
+const input3 = document.querySelector("#memberNick");
 const btn = document.querySelector("#btn_videoConference");
 const btn2 = document.querySelector("#btn2");
 let popup;
@@ -18,7 +19,7 @@ if (btn) {
         })
             .then((resp) => resp.text())
             .then(data => {
-            popup = window.open(`${req}/resources/popup/popup.jsp?memberNo=${input.value}&projectNo=${input2.value}&memberName=asd`, "VideoConference", "width=920,height=830");
+            popup = window.open(`${req}/resources/popup/popup.jsp?memberNo=${input.value}&projectNo=${input2.value}&memberName=${input3.value}`, "VideoConference", "width=920,height=830");
             popup.onload = () => {
                 popup.document.querySelector("#title-container").innerHTML = `<b>${data}</b>`;
                 fetch("/video/selectChat", {

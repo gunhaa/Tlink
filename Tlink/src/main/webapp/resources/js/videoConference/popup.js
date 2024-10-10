@@ -794,7 +794,7 @@ const startVideoConference = () => __awaiter(void 0, void 0, void 0, function* (
                 sendOffer(peerConnectionMap.get(otherMemberNo), otherMemberNo);
             }
         });
-    }, 5000);
+    }, 3000);
     // ** await을 하면 이벤트가 끝나기전에 실행되버린다**
     // await limitAndNegotiation();
 });

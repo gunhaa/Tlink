@@ -43,8 +43,8 @@
 
         <input id="memberNo" placeholder="memberNo 입력">
         <input id="roomNo" placeholder="projectNo 입력">
+        <input id="memberNick" placeholder="nickname 입력">
         <button id="btn_videoConference">입장</button>
-        <button id="btn2">모달 테스트</button>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
         <script src="<%=request.getContextPath()%>/resources/js/videoConference/videoConference.js" crossorigin="anonymous"></script>
 	</main>
