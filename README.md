@@ -6,6 +6,10 @@
 
 - 담당 부분만 : [클릭](https://www.canva.com/design/DAGSTp_mnRI/DppkDOzbChvEuKzoApsyqA/view?utm_content=DAGSTp_mnRI&utm_campaign=designshare&utm_medium=link&utm_source=editor)
 
+## 기술 스택
+
+`JAVA` `Javascript` `Servlet` `JSP` `JQuery` `HTML` `CSS` `Oracle SQL` `Apache Tomcat` `Spring` `Typescript`
+
 ## 담당 부분 미리보기
 
 ### 1. 화상회의
