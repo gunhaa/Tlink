@@ -21,7 +21,7 @@
 
 ## WEBRTC 연결 시나리오
 
-![image](https://github.com/user-attachments/assets/6d614180-2562-4473-be33-361aae08fa16)
+![image](https://github.com/user-attachments/assets/ff101cc7-b522-4b8f-a2f2-4997ef2cf89b)
 
 
 ## 빠르게 화상회의 테스트 방법
