@@ -19,7 +19,7 @@
 ### 3. 공유 화이트보드
 ![화상회의3](https://github.com/user-attachments/assets/5d3ffa61-4bef-4ddc-a813-0db8143b7dde)
 
-## WEBRTC 연결 시나리오
+## WEBRTC/MESH 연결 시나리오
 
 ![image](https://github.com/user-attachments/assets/ff101cc7-b522-4b8f-a2f2-4997ef2cf89b)
 
