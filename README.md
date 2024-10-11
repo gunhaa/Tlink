@@ -8,7 +8,7 @@
 
 ## 기술 스택
 
-`JAVA` `Javascript` `Servlet` `JSP` `JQuery` `HTML` `CSS` `Oracle SQL` `Apache Tomcat` `Spring` `Typescript`
+`JAVA` `Javascript` `Servlet` `JSP` `JQuery` `HTML` `CSS` `Oracle SQL` `Apache Tomcat` `Spring` `Typescript` `WEBRTC/MESH`
 
 ## 담당 부분 미리보기
 
