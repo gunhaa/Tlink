@@ -19,6 +19,11 @@
 ### 3. 공유 화이트보드
 ![화상회의3](https://github.com/user-attachments/assets/5d3ffa61-4bef-4ddc-a813-0db8143b7dde)
 
+## WEBRTC 연결 시나리오
+
+![image](https://github.com/user-attachments/assets/6d614180-2562-4473-be33-361aae08fa16)
+
+
 ## 빠르게 화상회의 테스트 방법
 
 1. SQL 폴더에서 01_sys로 계정 생성
