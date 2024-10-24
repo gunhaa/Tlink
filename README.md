@@ -45,4 +45,4 @@
 
 (+ 웹캠이 없을 시 화면공유로 자동 전환)
 
-6. 화상회의 Typescript코드는 videoConference TS폴더에 있습니다.
+6. 화상회의 프론트코드는 videoConference TS폴더에 있습니다.
