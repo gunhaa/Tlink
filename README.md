@@ -1,5 +1,9 @@
 # 프로젝트 관리 툴 TLINK
 
+## 아키텍쳐 구조
+
+![image](https://github.com/user-attachments/assets/104bc60f-6d22-4e46-99ec-53836510e3f2)
+
 ## 프로젝트 설명 링크
 
 - 프로젝트 전체 보기 : [클릭](https://www.canva.com/design/DAGTIqaouuY/vtZHOMoCNRtis_kDUQwFUA/view?utm_content=DAGTIqaouuY&utm_campaign=designshare&utm_medium=link&utm_source=editor)
