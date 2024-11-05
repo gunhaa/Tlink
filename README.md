@@ -1,6 +1,6 @@
 # 프로젝트 관리 툴 TLINK
 
-## 아키텍쳐 구조
+## 시스템 아키텍처
 
 ![image](https://github.com/user-attachments/assets/2f0e0036-733a-4619-aac8-977992982ac4)
 
