@@ -2,7 +2,8 @@
 
 ## 아키텍쳐 구조
 
-![image](https://github.com/user-attachments/assets/104bc60f-6d22-4e46-99ec-53836510e3f2)
+![image](https://github.com/user-attachments/assets/2f0e0036-733a-4619-aac8-977992982ac4)
+
 
 ## 프로젝트 설명 링크
 
