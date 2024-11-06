@@ -2,7 +2,7 @@
 
 ## 시스템 아키텍처
 
-![image](https://github.com/user-attachments/assets/150fc1b5-14ce-4bc1-9a95-98d191f20f65)
+![image](https://github.com/user-attachments/assets/51886cfd-ba9e-46fa-affa-7ba1403bae01)
 
 
 ## 프로젝트 설명 링크
