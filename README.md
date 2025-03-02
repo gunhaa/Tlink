@@ -27,27 +27,3 @@
 ## WEBRTC/MESH 연결 시나리오
 
 ![image](https://github.com/user-attachments/assets/ff101cc7-b522-4b8f-a2f2-4997ef2cf89b)
-
-
-## 빠르게 화상회의 테스트 방법
-
-1. SQL 폴더에서 01_sys로 계정 생성
-2. SQL 폴더에서 02_create로 테이블 생성
-3. SQL 폴더에서 03_insert로 유저 정보 삽입
-4. /video/test로 이동
-   
-![image](https://github.com/user-attachments/assets/12b13a0d-6832-4534-87f4-b37844d0ff55)
-
-5.
-- memberNo 3 , projectNo 1 , nickname 유저일
-- memberNo 4 , projectNo 1 , nickname 유저이
-- memberNo 5 , projectNo 1 , nickname 유저삼
-- memberNo 6 , projectNo 1 , nickname 유저사
-
-로 테스트가 가능합니다.
-
-(연결 지연시간이 컴퓨터 성능에 따라 훨씬 빨라질수 있지만, 안정적인 테스트를 위해서 3초로 설정)
-
-(+ 웹캠이 없을 시 화면공유로 자동 전환)
-
-6. 화상회의 프론트코드는 videoConference TS폴더에 있습니다.
